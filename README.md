@@ -26,9 +26,10 @@ Linux, macOS ou WSL:
 curl -fsSL https://raw.githubusercontent.com/JonatanRocha2/vegapunk/main/install.sh | sh
 ```
 
-Os comandos instalam globalmente as 16 skills em inglês e a skill MIT do
-[Caveman](https://github.com/JuliusBrussee/caveman) para o Codex. Reexecute o
-instalador para atualizar e reinicie o Codex se as skills não aparecerem.
+Os comandos instalam globalmente as 16 skills em inglês, as skills oficiais do
+`aws-core` e a skill MIT do [Caveman](https://github.com/JuliusBrussee/caveman)
+para o Codex. Reexecute o instalador para atualizar e reinicie o Codex se as
+skills não aparecerem.
 
 Requisito: Node.js 22.20 ou mais recente. O `skills` CLI envia telemetria
 anônima por padrão; defina `DISABLE_TELEMETRY=1` antes do comando para desativar.
@@ -38,6 +39,8 @@ script primeiro em ambientes sensíveis. Veja [SECURITY.md](SECURITY.md).
 ## Escolher Idioma
 
 Somente um pack deve ser instalado para evitar ativações duplicadas.
+As skills externas oficiais do `aws-core` são publicadas pela AWS somente em
+inglês e são as mesmas nos dois packs.
 
 Inglês, a partir de um clone:
 
@@ -90,17 +93,21 @@ vendoring, preserva autoria e licença e permite atualizações controladas.
 
 Para implementação detalhada em serviços AWS, o
 [Agent Toolkit for AWS](https://github.com/aws/agent-toolkit-for-aws) é o catálogo
-oficial e suportado pela AWS. No Codex, adicione o marketplace:
+oficial e suportado pela AWS. O instalador padrão adiciona todas as skills de
+`aws-core`, fixadas em um commit imutável, mas não configura o AWS MCP Server nem
+solicita credenciais. Para não instalá-las, use `-NoAwsToolkit` ou
+`--no-aws-toolkit`.
+
+Para habilitar separadamente o plugin completo, incluindo o MCP, adicione o
+marketplace:
 
 ```bash
 codex plugin marketplace add aws/agent-toolkit-for-aws
 ```
 
 Depois, use `/plugins` no Codex para revisar e instalar `aws-core`. Os plugins
-`aws-agents` e `aws-data-analytics` são opções especializadas. O toolkit não é
-instalado pelo script padrão porque sobrepõe parte do catálogo local e pode
-configurar um MCP com acesso autenticado à AWS; revise conta, região, IAM,
-telemetria e permissões de escrita antes de habilitá-lo.
+`aws-agents` e `aws-data-analytics` são opções especializadas. Revise conta,
+região, IAM, telemetria e permissões de escrita antes de habilitar o MCP.
 
 ## Caveman Proxy
 

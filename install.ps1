@@ -3,6 +3,7 @@ param(
     [string]$Language = "en",
     [switch]$WithCavemanProxy,
     [switch]$NoCaveman,
+    [switch]$NoAwsToolkit,
     [switch]$AllowElevated
 )
 
@@ -15,6 +16,9 @@ $CavemanVersion = "v2.3.1"
 $CavemanCommit = "b5ec6351396b643a17cbbec4a6eee8b3fb9dd782"
 # renovate: datasource=npm depName=@caveman-ai/cli
 $CavemanCliVersion = "1.2.5"
+# renovate: datasource=github-digest depName=aws/agent-toolkit-for-aws
+$AwsToolkitRef = "main"
+$AwsToolkitCommit = "ed19c44c46c9c3a12ef0ff5bbf88161b75d3efbe"
 
 $CurrentIdentity = [Security.Principal.WindowsIdentity]::GetCurrent()
 $CurrentPrincipal = [Security.Principal.WindowsPrincipal]::new($CurrentIdentity)
@@ -74,6 +78,14 @@ $SkillArguments = @("--yes", "skills@$SkillsCliVersion", "add", "JonatanRocha2/v
 $SkillArguments += $Skills
 $SkillArguments += @("-a", "codex", "-g", "--yes")
 Invoke-Checked -Program "npx" -Arguments $SkillArguments
+
+if (-not $NoAwsToolkit) {
+    Invoke-Checked -Program "npx" -Arguments @(
+        "--yes", "skills@$SkillsCliVersion", "add",
+        "https://github.com/aws/agent-toolkit-for-aws/tree/$AwsToolkitCommit/skills/core-skills",
+        "--skill", "*", "-a", "codex", "-g", "--yes"
+    )
+}
 
 if (-not $NoCaveman) {
     Invoke-Checked -Program "npx" -Arguments @(

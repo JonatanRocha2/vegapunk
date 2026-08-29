@@ -114,6 +114,16 @@ const pins = {
     powershellInstaller.match(/^\$CavemanCliVersion = "([^"]+)"$/m)?.[1],
     shellInstaller.match(/^caveman_cli_version=(\S+)$/m)?.[1],
   ],
+  awsToolkitRef: [
+    powershellInstaller.match(/^\$AwsToolkitRef = "([^"]+)"$/m)?.[1],
+    shellInstaller.match(/^aws_toolkit_ref=(\S+)$/m)?.[1],
+    workflow.match(/^  AWS_TOOLKIT_REF: "([^"]+)"$/m)?.[1],
+  ],
+  awsToolkitCommit: [
+    powershellInstaller.match(/^\$AwsToolkitCommit = "([a-f0-9]{40})"$/m)?.[1],
+    shellInstaller.match(/^aws_toolkit_commit=([a-f0-9]{40})$/m)?.[1],
+    workflow.match(/^  AWS_TOOLKIT_COMMIT: "([a-f0-9]{40})"$/m)?.[1],
+  ],
 };
 
 for (const [dependency, values] of Object.entries(pins)) {

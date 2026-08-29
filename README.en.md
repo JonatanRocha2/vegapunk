@@ -26,9 +26,10 @@ Linux, macOS, or WSL:
 curl -fsSL https://raw.githubusercontent.com/JonatanRocha2/vegapunk/main/install.sh | sh
 ```
 
-These commands globally install the 16 English skills and the MIT
-[Caveman](https://github.com/JuliusBrussee/caveman) skill for Codex. Rerun the
-installer to update and restart Codex if the skills do not appear.
+These commands globally install the 16 English skills, the official `aws-core`
+skills, and the MIT [Caveman](https://github.com/JuliusBrussee/caveman) skill for
+Codex. Rerun the installer to update and restart Codex if the skills do not
+appear.
 
 Requirement: Node.js 22.20 or newer. The `skills` CLI sends anonymous telemetry
 by default; set `DISABLE_TELEMETRY=1` before running the command to opt out.
@@ -38,6 +39,8 @@ first in sensitive environments. See [SECURITY.en.md](SECURITY.en.md).
 ## Choose A Language
 
 Install only one pack to avoid duplicate activations.
+The external official `aws-core` skills are published by AWS in English and are
+the same for both language packs.
 
 English, from a local clone:
 
@@ -92,17 +95,19 @@ vendoring, preserves attribution and licensing, and enables controlled updates.
 
 For detailed AWS service implementation, the
 [Agent Toolkit for AWS](https://github.com/aws/agent-toolkit-for-aws) is the
-official AWS-supported catalog. Add its marketplace to Codex:
+official AWS-supported catalog. The default installer adds all `aws-core` skills
+at an immutable commit, but does not configure the AWS MCP Server or request
+credentials. Use `-NoAwsToolkit` or `--no-aws-toolkit` to skip them.
+
+To enable the complete plugin separately, including its MCP, add the marketplace:
 
 ```bash
 codex plugin marketplace add aws/agent-toolkit-for-aws
 ```
 
 Then use `/plugins` in Codex to review and install `aws-core`. `aws-agents` and
-`aws-data-analytics` are specialized alternatives. The default installer does
-not add the toolkit because it overlaps part of the local catalog and may
-configure an MCP with authenticated AWS access; review the account, Region, IAM,
-telemetry, and write permissions before enabling it.
+`aws-data-analytics` are specialized alternatives. Review the account, Region,
+IAM, telemetry, and write permissions before enabling the MCP.
 
 ## Caveman Proxy
 

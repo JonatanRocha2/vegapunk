@@ -32,12 +32,24 @@
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "JuliusBrussee/caveman",
       "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "description": "Update the official AWS skill bundle commit",
+      "managerFilePatterns": ["/^install\\.(?:ps1|sh)$/", "/^\\.github/workflows/validate\\.yml$/"],
+      "matchStrings": [
+        "# renovate: datasource=github-digest depName=aws/agent-toolkit-for-aws\\s+\\$AwsToolkitRef = \"(?<currentValue>[^\"]+)\"\\s+\\$AwsToolkitCommit = \"(?<currentDigest>[a-f0-9]{40})\"",
+        "# renovate: datasource=github-digest depName=aws/agent-toolkit-for-aws\\s+aws_toolkit_ref=(?<currentValue>\\S+)\\s+aws_toolkit_commit=(?<currentDigest>[a-f0-9]{40})",
+        "# renovate: datasource=github-digest depName=aws/agent-toolkit-for-aws\\s+AWS_TOOLKIT_REF: \"(?<currentValue>[^\"]+)\"\\s+AWS_TOOLKIT_COMMIT: \"(?<currentDigest>[a-f0-9]{40})\""
+      ],
+      "datasourceTemplate": "github-digest",
+      "depNameTemplate": "aws/agent-toolkit-for-aws"
     }
   ],
   "packageRules": [
     {
       "description": "Allow time for newly published external artifacts to be reviewed or withdrawn",
-      "matchDatasources": ["npm", "github-releases", "github-tags"],
+      "matchDatasources": ["npm", "github-releases", "github-tags", "github-digest"],
       "minimumReleaseAge": "3 days"
     },
     {
@@ -49,6 +61,11 @@
       "description": "Keep the skills CLI synchronized across installers and validation",
       "matchPackageNames": ["skills"],
       "groupName": "Agent Skills CLI"
+    },
+    {
+      "description": "Review the official AWS skill bundle as one external dependency",
+      "matchPackageNames": ["aws/agent-toolkit-for-aws"],
+      "groupName": "Official AWS skill bundle"
     }
   ]
 }

@@ -17,6 +17,9 @@ env:
   NPM_CONFIG_IGNORE_SCRIPTS: "true"
   # renovate: datasource=npm depName=skills
   SKILLS_CLI_VERSION: "1.5.23"
+  # renovate: datasource=github-digest depName=aws/agent-toolkit-for-aws
+  AWS_TOOLKIT_REF: "main"
+  AWS_TOOLKIT_COMMIT: "ed19c44c46c9c3a12ef0ff5bbf88161b75d3efbe"
 
 jobs:
   validate:
@@ -56,3 +59,9 @@ jobs:
 
       - name: Verify Agent Skills discovery
         run: npx --yes "skills@$SKILLS_CLI_VERSION" add . --list
+
+      - name: Verify official AWS skills discovery
+        run: >-
+          npx --yes "skills@$SKILLS_CLI_VERSION" add
+          "https://github.com/aws/agent-toolkit-for-aws/tree/$AWS_TOOLKIT_COMMIT/skills/core-skills"
+          --list

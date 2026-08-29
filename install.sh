@@ -3,6 +3,7 @@ set -eu
 
 with_caveman_proxy=0
 install_caveman=1
+install_aws_toolkit=1
 language=en
 allow_elevated=0
 
@@ -13,11 +14,15 @@ caveman_version=v2.3.1
 caveman_commit=b5ec6351396b643a17cbbec4a6eee8b3fb9dd782
 # renovate: datasource=npm depName=@caveman-ai/cli
 caveman_cli_version=1.2.5
+# renovate: datasource=github-digest depName=aws/agent-toolkit-for-aws
+aws_toolkit_ref=main
+aws_toolkit_commit=ed19c44c46c9c3a12ef0ff5bbf88161b75d3efbe
 
 while [ "$#" -gt 0 ]; do
   case "$1" in
     --with-caveman-proxy) with_caveman_proxy=1 ;;
     --no-caveman) install_caveman=0 ;;
+    --no-aws-toolkit) install_aws_toolkit=0 ;;
     --allow-elevated) allow_elevated=1 ;;
     --lang)
       if [ "$#" -lt 2 ]; then
@@ -77,6 +82,12 @@ if ! node -e 'const [a,b]=process.versions.node.split(".").map(Number); process.
 fi
 
 npx --yes "skills@$skills_cli_version" add JonatanRocha2/vegapunk --skill "$@" -a codex -g --yes
+
+if [ "$install_aws_toolkit" -eq 1 ]; then
+  npx --yes "skills@$skills_cli_version" add \
+    "https://github.com/aws/agent-toolkit-for-aws/tree/$aws_toolkit_commit/skills/core-skills" \
+    --skill '*' -a codex -g --yes
+fi
 
 if [ "$install_caveman" -eq 1 ]; then
   npx --yes "skills@$skills_cli_version" add \
