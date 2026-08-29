@@ -1,0 +1,53 @@
+# Curadoria e fontes
+
+[English](CURATION.en.md) | **Português (Brasil)**
+
+Revisado em 2026-08-29. A selecao privilegia documentacao oficial, escopo claro,
+manutencao ativa, progressive disclosure e baixo risco operacional. Popularidade
+nao substitui auditoria: uma skill e instrucao executavel pelo agente e deve ser
+revisada antes de receber credenciais ou permissoes de escrita.
+
+## Base oficial
+
+- [OpenAI: Build skills](https://developers.openai.com/codex/build-skills)
+- [Agent Skills specification](https://agentskills.io/specification)
+- [Vercel Skills CLI](https://skills.sh/docs/cli)
+- [AWS Well-Architected](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html)
+- [Google Cloud Well-Architected Framework](https://cloud.google.com/architecture/framework)
+- [Azure Well-Architected Framework](https://learn.microsoft.com/azure/well-architected/)
+- [Cloud Adoption Framework for Azure](https://learn.microsoft.com/azure/cloud-adoption-framework/)
+- [Google SRE books](https://sre.google/books/)
+- [Kubernetes documentation](https://kubernetes.io/docs/)
+- [Terraform documentation](https://developer.hashicorp.com/terraform/docs)
+- [NIST Cybersecurity Framework](https://www.nist.gov/cyberframework)
+- [OWASP ASVS](https://owasp.org/www-project-application-security-verification-standard/)
+
+## Upstream recomendado
+
+| Fonte | Skills de destaque | Decisao |
+| --- | --- | --- |
+| `google/skills` | GKE basics e pilares do Google Cloud WAF | Oficial e excelente para aprofundar GCP |
+| `hashicorp/skills` | Terraform style, test, stacks e refactor-module | Oficial; instalar conforme o fluxo usado |
+| `microsoft/skills` | cloud-solution-architect | Oficial para arquitetura Azure |
+| `trailofbits/skills` | differential-review | Revisao de diff com foco forte em seguranca |
+| `getsentry/skills` | sentry-workflow | Incidentes e review com contexto de producao |
+| `datadog-labs/skills` | APM, logs e monitors | Operacao dependente de conta e CLI Datadog |
+| `coderabbitai/skills` | code-review | Util se o servico CodeRabbit fizer parte do fluxo |
+| `zxkane/aws-skills` | CDK, custo/operacoes e serverless EDA | Boa comunidade; nao e publicacao oficial da AWS |
+| `JuliusBrussee/caveman` | caveman | Economia de saida; proxy opcional para entrada |
+
+## O que nao instalar por padrao
+
+- Colecoes com centenas de skills: aumentam colisoes e pioram descoberta.
+- Skills que duplicam conhecimento ja coberto por uma skill mais focada.
+- Plugins que executam mudancas cloud sem preview e aprovacao.
+- Integracoes que exigem tokens de terceiros sem necessidade recorrente.
+- Repositorios sem licenca clara, historico verificavel ou escopo definido.
+
+## Politica de atualizacao
+
+1. Reavaliar fontes trimestralmente ou quando um provider mudar seu framework.
+2. Preferir links e conceitos estaveis a copiar documentacao extensa.
+3. Testar descrições com prompts positivos e negativos nos dois idiomas.
+4. Remover regras obsoletas em vez de acumular compatibilidade historica.
+5. Registrar mudancas de comportamento relevantes no historico Git.

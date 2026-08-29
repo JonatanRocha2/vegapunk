@@ -1,0 +1,10 @@
+{
+  "name": "vegapunk-skills",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Curated cloud, infrastructure, architecture and review skills for Codex",
+  "license": "MIT",
+  "scripts": {
+    "test": "node scripts/validate.mjs"
+  }
+}
