@@ -34,8 +34,9 @@ if ($WithCavemanProxy -and $NoCaveman) {
 }
 
 if (-not (Get-Command node -ErrorAction SilentlyContinue) -or
-    -not (Get-Command npx -ErrorAction SilentlyContinue)) {
-    throw "Node.js 22.20 or newer with npx is required: https://nodejs.org/"
+    -not (Get-Command npx -ErrorAction SilentlyContinue) -or
+    -not (Get-Command git -ErrorAction SilentlyContinue)) {
+    throw "Node.js 22.20 or newer with npx and Git are required."
 }
 
 $NodeVersion = [version]((& node --version).TrimStart("v"))
@@ -80,11 +81,26 @@ $SkillArguments += @("-a", "codex", "-g", "--yes")
 Invoke-Checked -Program "npx" -Arguments $SkillArguments
 
 if (-not $NoAwsToolkit) {
-    Invoke-Checked -Program "npx" -Arguments @(
-        "--yes", "skills@$SkillsCliVersion", "add",
-        "https://github.com/aws/agent-toolkit-for-aws/tree/$AwsToolkitCommit/skills/core-skills",
-        "--skill", "*", "-a", "codex", "-g", "--yes"
-    )
+    $AwsToolkitTemp = Join-Path ([IO.Path]::GetTempPath()) "vegapunk-aws-$([guid]::NewGuid())"
+    try {
+        Invoke-Checked -Program "git" -Arguments @("init", "--quiet", $AwsToolkitTemp)
+        Invoke-Checked -Program "git" -Arguments @(
+            "-C", $AwsToolkitTemp, "fetch", "--quiet", "--depth", "1",
+            "https://github.com/aws/agent-toolkit-for-aws.git", $AwsToolkitCommit
+        )
+        Invoke-Checked -Program "git" -Arguments @(
+            "-C", $AwsToolkitTemp, "checkout", "--quiet", "--detach", "FETCH_HEAD"
+        )
+        Invoke-Checked -Program "npx" -Arguments @(
+            "--yes", "skills@$SkillsCliVersion", "add",
+            (Join-Path $AwsToolkitTemp "skills/core-skills"),
+            "--skill", "*", "-a", "codex", "-g", "--copy", "--yes"
+        )
+    } finally {
+        if (Test-Path -LiteralPath $AwsToolkitTemp) {
+            Remove-Item -LiteralPath $AwsToolkitTemp -Recurse -Force
+        }
+    }
 }
 
 if (-not $NoCaveman) {

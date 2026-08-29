@@ -61,7 +61,12 @@ jobs:
         run: npx --yes "skills@$SKILLS_CLI_VERSION" add . --list
 
       - name: Verify official AWS skills discovery
-        run: >-
-          npx --yes "skills@$SKILLS_CLI_VERSION" add
-          "https://github.com/aws/agent-toolkit-for-aws/tree/$AWS_TOOLKIT_COMMIT/skills/core-skills"
-          --list
+        run: |
+          aws_toolkit_temp=$(mktemp -d)
+          trap 'rm -rf "$aws_toolkit_temp"' EXIT
+          git init --quiet "$aws_toolkit_temp"
+          git -C "$aws_toolkit_temp" fetch --quiet --depth 1 \
+            https://github.com/aws/agent-toolkit-for-aws.git "$AWS_TOOLKIT_COMMIT"
+          git -C "$aws_toolkit_temp" checkout --quiet --detach FETCH_HEAD
+          npx --yes "skills@$SKILLS_CLI_VERSION" add \
+            "$aws_toolkit_temp/skills/core-skills" --list

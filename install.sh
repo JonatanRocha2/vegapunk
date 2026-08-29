@@ -71,8 +71,10 @@ case "$language" in
     ;;
 esac
 
-if ! command -v node >/dev/null 2>&1 || ! command -v npx >/dev/null 2>&1; then
-  printf 'Node.js 22.20 or newer with npx is required: https://nodejs.org/\n' >&2
+if ! command -v node >/dev/null 2>&1 || \
+   ! command -v npx >/dev/null 2>&1 || \
+   ! command -v git >/dev/null 2>&1; then
+  printf '%s\n' 'Node.js 22.20 or newer with npx and Git are required.' >&2
   exit 1
 fi
 
@@ -84,9 +86,17 @@ fi
 npx --yes "skills@$skills_cli_version" add JonatanRocha2/vegapunk --skill "$@" -a codex -g --yes
 
 if [ "$install_aws_toolkit" -eq 1 ]; then
+  aws_toolkit_temp=$(mktemp -d)
+  trap 'rm -rf "$aws_toolkit_temp"' EXIT HUP INT TERM
+  git init --quiet "$aws_toolkit_temp"
+  git -C "$aws_toolkit_temp" fetch --quiet --depth 1 \
+    https://github.com/aws/agent-toolkit-for-aws.git "$aws_toolkit_commit"
+  git -C "$aws_toolkit_temp" checkout --quiet --detach FETCH_HEAD
   npx --yes "skills@$skills_cli_version" add \
-    "https://github.com/aws/agent-toolkit-for-aws/tree/$aws_toolkit_commit/skills/core-skills" \
-    --skill '*' -a codex -g --yes
+    "$aws_toolkit_temp/skills/core-skills" \
+    --skill '*' -a codex -g --copy --yes
+  rm -rf "$aws_toolkit_temp"
+  trap - EXIT HUP INT TERM
 fi
 
 if [ "$install_caveman" -eq 1 ]; then

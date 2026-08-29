@@ -31,7 +31,7 @@ Os comandos instalam globalmente as 16 skills em inglês, as skills oficiais do
 para o Codex. Reexecute o instalador para atualizar e reinicie o Codex se as
 skills não aparecerem.
 
-Requisito: Node.js 22.20 ou mais recente. O `skills` CLI envia telemetria
+Requisitos: Node.js 22.20 ou mais recente e Git. O `skills` CLI envia telemetria
 anônima por padrão; defina `DISABLE_TELEMETRY=1` antes do comando para desativar.
 Executar um script remoto implica confiança no conteúdo atual de `main`; revise o
 script primeiro em ambientes sensíveis. Veja [SECURITY.md](SECURITY.md).

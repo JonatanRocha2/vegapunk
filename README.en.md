@@ -31,7 +31,7 @@ skills, and the MIT [Caveman](https://github.com/JuliusBrussee/caveman) skill fo
 Codex. Rerun the installer to update and restart Codex if the skills do not
 appear.
 
-Requirement: Node.js 22.20 or newer. The `skills` CLI sends anonymous telemetry
+Requirements: Node.js 22.20 or newer and Git. The `skills` CLI sends anonymous telemetry
 by default; set `DISABLE_TELEMETRY=1` before running the command to opt out.
 Running a remote script trusts the current contents of `main`; review the script
 first in sensitive environments. See [SECURITY.en.md](SECURITY.en.md).
