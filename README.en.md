@@ -26,12 +26,14 @@ Linux, macOS, or WSL:
 curl -fsSL https://raw.githubusercontent.com/JonatanRocha2/vegapunk/main/install.sh | sh
 ```
 
-These commands globally install the 12 English skills and the MIT
+These commands globally install the 16 English skills and the MIT
 [Caveman](https://github.com/JuliusBrussee/caveman) skill for Codex. Rerun the
 installer to update and restart Codex if the skills do not appear.
 
 Requirement: Node.js 22.20 or newer. The `skills` CLI sends anonymous telemetry
 by default; set `DISABLE_TELEMETRY=1` before running the command to opt out.
+Running a remote script trusts the current contents of `main`; review the script
+first in sensitive environments. See [SECURITY.en.md](SECURITY.en.md).
 
 ## Choose A Language
 
@@ -74,7 +76,11 @@ Use `-Language pt-br` or `--lang pt-br` for Brazilian Portuguese.
 | `sre-incident-response` | `sre-incident-response-pt-br` | SLOs, incidents, runbooks, and postmortems |
 | `cloud-security-review` | `cloud-security-review-pt-br` | Threat modeling and cloud/IaC posture reviews |
 | `finops-cost-review` | `finops-cost-review-pt-br` | Cost and FinOps without degrading SLOs |
+| `network-engineering` | `network-engineering-pt-br` | Network design and troubleshooting across DNS, TLS, cloud, and hybrid environments |
+| `ansible-automation` | `ansible-automation-pt-br` | Idempotent, testable Ansible with safe rollouts |
+| `certification-study` | `certification-study-pt-br` | Ethical, current preparation for official cloud and infrastructure certifications |
 | `code-review` | `code-review-pt-br` | Risk-, evidence-, and test-driven code review |
+| `semantic-commit` | `semantic-commit-pt-br` | Conventional Commits grounded in the actual diff |
 
 English versions live in `skills/en/`. Brazilian versions live in
 `skills/pt-br/` and use the `-pt-br` suffix to preserve globally unique names.
@@ -104,9 +110,10 @@ sh install.sh --lang en --with-caveman-proxy
 Read Caveman's security and licensing documentation before enabling the proxy.
 Disable its telemetry with `caveman telemetry off`.
 
-The installers pin `skills@1.5.23`, Caveman `v2.3.1` at verified commit
-`b5ec635`, and optional `@caveman-ai/cli@1.2.5`. Update these pins deliberately
-after reviewing changelogs, licensing, and security.
+External dependency versions and the immutable commit are pinned at the top of
+both installers. Renovate tracks new versions, waits three days, and opens PRs
+without automerge for review of changelogs, licensing, diffs, digests, telemetry,
+and security.
 
 ## Curation Principles
 
@@ -126,9 +133,10 @@ See [CURATION.en.md](CURATION.en.md) for sources and decisions, or
 npm test
 ```
 
-The validator requires 12 skills per language, complete language pairs, valid
-frontmatter, and consistency with the catalog. CI also checks actual discovery
-through the `skills` CLI.
+The validator requires 16 skills per language, complete language pairs, valid
+frontmatter, and consistency with the catalog. CI uses read-only permissions,
+SHA-pinned Actions, and no persisted credentials; it also validates both
+installers and actual discovery through the `skills` CLI.
 
 ## License
 

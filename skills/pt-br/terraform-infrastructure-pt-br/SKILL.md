@@ -4,7 +4,7 @@ description: Cria, revisa, testa, importa, refatora e soluciona problemas de inf
 license: MIT
 metadata:
   author: JonatanRocha2
-  version: "1.0"
+  version: "1.1"
   language: "pt-BR"
 ---
 
@@ -32,6 +32,15 @@ Preserve a integridade do state e faça a menor alteração segura na infraestru
 - Fixe deliberadamente os intervalos de versões dos providers e faça commit do arquivo de lock de dependências dos módulos raiz.
 - Não adicione `ignore_changes` apenas para ocultar um drift sem explicação.
 - Nunca execute `apply`, `destroy`, desbloqueio forçado ou alteração de state sem aprovação explícita e confirmação do escopo.
+
+## Orientação oficial especializada
+
+Para trabalhos específicos com Terraform, consulte a skill relevante no catálogo
+oficial [`hashicorp/agent-skills`](https://github.com/hashicorp/agent-skills),
+incluindo estilo, testes, stacks, refatoração de módulos, políticas e importação de
+recursos. Use essas instruções seletivamente em vez de instalar skills sobrepostas
+por padrão. Mantenha esta skill como o fluxo provider-neutral de segurança e ciclo
+de vida.
 
 ## Resultado da revisão
 

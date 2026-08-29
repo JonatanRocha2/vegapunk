@@ -1,0 +1,54 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "dependencyDashboard": true,
+  "automerge": false,
+  "ignoreScripts": true,
+  "osvVulnerabilityAlerts": true,
+  "schedule": ["at any time"],
+  "semanticCommits": "enabled",
+  "labels": ["dependencies", "security-review-required"],
+  "prConcurrentLimit": 3,
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Update pinned npm CLIs in both installers",
+      "managerFilePatterns": ["/^install\\.(?:ps1|sh)$/", "/^\\.github/workflows/validate\\.yml$/"],
+      "matchStrings": [
+        "# renovate: datasource=npm depName=(?<depName>\\S+)\\s+\\$[A-Za-z]+ = \"(?<currentValue>[^\"]+)\"",
+        "# renovate: datasource=npm depName=(?<depName>\\S+)\\s+[a-z_]+=(?<currentValue>\\S+)",
+        "# renovate: datasource=npm depName=(?<depName>\\S+)\\s+SKILLS_CLI_VERSION: \"(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "npm"
+    },
+    {
+      "customType": "regex",
+      "description": "Update the Caveman skill release and immutable commit together",
+      "managerFilePatterns": ["/^install\\.(?:ps1|sh)$/"],
+      "matchStrings": [
+        "# renovate: datasource=github-releases depName=JuliusBrussee/caveman\\s+\\$CavemanVersion = \"(?<currentValue>[^\"]+)\"\\s+\\$CavemanCommit = \"(?<currentDigest>[a-f0-9]{40})\"",
+        "# renovate: datasource=github-releases depName=JuliusBrussee/caveman\\s+caveman_version=(?<currentValue>\\S+)\\s+caveman_commit=(?<currentDigest>[a-f0-9]{40})"
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "JuliusBrussee/caveman",
+      "versioningTemplate": "semver"
+    }
+  ],
+  "packageRules": [
+    {
+      "description": "Allow time for newly published external artifacts to be reviewed or withdrawn",
+      "matchDatasources": ["npm", "github-releases", "github-tags"],
+      "minimumReleaseAge": "3 days"
+    },
+    {
+      "description": "Keep all Caveman release pins synchronized in one review",
+      "matchPackageNames": ["JuliusBrussee/caveman", "@caveman-ai/cli"],
+      "groupName": "Caveman external dependencies"
+    },
+    {
+      "description": "Keep the skills CLI synchronized across installers and validation",
+      "matchPackageNames": ["skills"],
+      "groupName": "Agent Skills CLI"
+    }
+  ]
+}

@@ -26,12 +26,14 @@ Linux, macOS ou WSL:
 curl -fsSL https://raw.githubusercontent.com/JonatanRocha2/vegapunk/main/install.sh | sh
 ```
 
-Os comandos instalam globalmente as 12 skills em inglês e a skill MIT do
+Os comandos instalam globalmente as 16 skills em inglês e a skill MIT do
 [Caveman](https://github.com/JuliusBrussee/caveman) para o Codex. Reexecute o
 instalador para atualizar e reinicie o Codex se as skills não aparecerem.
 
 Requisito: Node.js 22.20 ou mais recente. O `skills` CLI envia telemetria
 anônima por padrão; defina `DISABLE_TELEMETRY=1` antes do comando para desativar.
+Executar um script remoto implica confiança no conteúdo atual de `main`; revise o
+script primeiro em ambientes sensíveis. Veja [SECURITY.md](SECURITY.md).
 
 ## Escolher Idioma
 
@@ -72,7 +74,11 @@ curl -fsSL https://raw.githubusercontent.com/JonatanRocha2/vegapunk/main/install
 | `sre-incident-response` | `sre-incident-response-pt-br` | SLOs, incidentes, runbooks e post-mortems |
 | `cloud-security-review` | `cloud-security-review-pt-br` | Threat modeling e revisão de postura cloud/IaC |
 | `finops-cost-review` | `finops-cost-review-pt-br` | Custos e FinOps sem degradar SLOs |
+| `network-engineering` | `network-engineering-pt-br` | Design e troubleshooting de redes, DNS, TLS, cloud e híbrido |
+| `ansible-automation` | `ansible-automation-pt-br` | Ansible idempotente, testável e com rollout seguro |
+| `certification-study` | `certification-study-pt-br` | Estudo ético e atualizado para certificações oficiais de cloud e infraestrutura |
 | `code-review` | `code-review-pt-br` | Revisão baseada em risco, evidências e testes |
+| `semantic-commit` | `semantic-commit-pt-br` | Conventional Commits baseados no diff real |
 
 As versões em inglês ficam em `skills/en/`. As versões brasileiras ficam em
 `skills/pt-br/` e usam o sufixo `-pt-br` para manter nomes globalmente únicos.
@@ -101,9 +107,10 @@ sh install.sh --with-caveman-proxy
 Leia a documentação de segurança e licenciamento do Caveman antes de habilitar
 o proxy. Para desativar sua telemetria: `caveman telemetry off`.
 
-Os instaladores fixam `skills@1.5.23`, Caveman `v2.3.1` pelo commit verificado
-`b5ec635` e, quando solicitado, `@caveman-ai/cli@1.2.5`. Atualize esses pins de
-forma deliberada depois de revisar changelog, licença e segurança.
+As versões e o commit imutável das dependências externas ficam fixados no início
+dos instaladores. O Renovate acompanha novas versões, espera três dias e abre
+PRs sem automerge para revisão de changelog, licença, diff, digest, telemetria e
+segurança.
 
 ## Princípios da Curadoria
 
@@ -123,9 +130,10 @@ Veja [CURATION.md](CURATION.md) para fontes e decisões ou
 npm test
 ```
 
-O validador exige 12 skills por idioma, pares completos entre os packs,
-frontmatter válido e correspondência com este catálogo. A CI também testa a
-descoberta real pelo `skills` CLI.
+O validador exige 16 skills por idioma, pares completos entre os packs,
+frontmatter válido e correspondência com este catálogo. A CI usa permissões
+somente de leitura, Actions fixadas por SHA e sem credenciais persistidas; também
+valida os dois instaladores e a descoberta real pelo `skills` CLI.
 
 ## Licença
 

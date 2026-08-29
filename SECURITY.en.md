@@ -1,0 +1,46 @@
+# Security
+
+**English** | [Português (Brasil)](SECURITY.md)
+
+Agent Skills are executable instructions for an agent. Treat changes to
+`SKILL.md`, installers, and external dependencies as code changes.
+
+## Trust Model
+
+- The 16 bilingual skills in this repository are original MIT-licensed content.
+- The installer runs a version-pinned npm `skills` CLI and installs the Caveman
+  skill directly from upstream at an immutable commit.
+- The Caveman proxy is optional, installs another npm package, and may forward
+  traffic to the provider. It is never enabled without `-WithCavemanProxy` or
+  `--with-caveman-proxy`.
+- Installers refuse elevated execution by default to limit the impact of a
+  compromised dependency. Use the override only after reviewing the script and
+  when installation genuinely requires that privilege.
+
+## Guardrails
+
+- Review remote scripts before using `iex` or piping to `sh`, especially after
+  the repository or a pin changes.
+- Never provide secrets, cloud tokens, or production access to a skill before
+  reviewing its content and limiting the session's permissions.
+- Use temporary least-privilege credentials and keep study and test environments
+  separate from production.
+- Do not accept destructive changes without a diff or plan, explicit target,
+  backup or rollback, and human approval.
+- Do not automerge external updates. Review authorship, licensing, changelog,
+  release diff, digest, and telemetry or network changes.
+- Run `npm test`, check the relevant installer syntax, and perform a
+  credential-free installation before approving an update.
+
+## Automated Updates
+
+`renovate.json` tracks `skills`, the Caveman skill release and immutable commit,
+and `@caveman-ai/cli`. Renovate waits three days after publication and opens PRs
+without automerge. The configuration takes effect only after enabling the
+Renovate GitHub App for the repository.
+
+## Reporting A Vulnerability
+
+Do not publish credentials or exploitable details in an issue. Prefer GitHub's
+private security advisory channel; if it is unavailable, contact the maintainer
+without secrets and arrange a private channel.

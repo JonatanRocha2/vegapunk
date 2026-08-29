@@ -2,10 +2,32 @@ param(
     [ValidateSet("pt-br", "en")]
     [string]$Language = "en",
     [switch]$WithCavemanProxy,
-    [switch]$NoCaveman
+    [switch]$NoCaveman,
+    [switch]$AllowElevated
 )
 
 $ErrorActionPreference = "Stop"
+
+# renovate: datasource=npm depName=skills
+$SkillsCliVersion = "1.5.23"
+# renovate: datasource=github-releases depName=JuliusBrussee/caveman
+$CavemanVersion = "v2.3.1"
+$CavemanCommit = "b5ec6351396b643a17cbbec4a6eee8b3fb9dd782"
+# renovate: datasource=npm depName=@caveman-ai/cli
+$CavemanCliVersion = "1.2.5"
+
+$CurrentIdentity = [Security.Principal.WindowsIdentity]::GetCurrent()
+$CurrentPrincipal = [Security.Principal.WindowsPrincipal]::new($CurrentIdentity)
+$IsAdministrator = $CurrentPrincipal.IsInRole(
+    [Security.Principal.WindowsBuiltInRole]::Administrator
+)
+if ($IsAdministrator -and -not $AllowElevated) {
+    throw "Refusing elevated installation. Run as a normal user or pass -AllowElevated after reviewing the script."
+}
+
+if ($WithCavemanProxy -and $NoCaveman) {
+    throw "-WithCavemanProxy cannot be combined with -NoCaveman."
+}
 
 if (-not (Get-Command node -ErrorAction SilentlyContinue) -or
     -not (Get-Command npx -ErrorAction SilentlyContinue)) {
@@ -31,7 +53,9 @@ $Skills = if ($Language -eq "en") {
         "software-architecture", "cloud-architecture", "aws-architecture",
         "gcp-architecture", "azure-architecture", "terraform-infrastructure",
         "kubernetes-operations", "devops-cicd", "sre-incident-response",
-        "cloud-security-review", "finops-cost-review", "code-review"
+        "cloud-security-review", "finops-cost-review", "network-engineering",
+        "ansible-automation", "certification-study", "code-review",
+        "semantic-commit"
     )
 } else {
     @(
@@ -40,25 +64,27 @@ $Skills = if ($Language -eq "en") {
         "azure-architecture-pt-br", "terraform-infrastructure-pt-br",
         "kubernetes-operations-pt-br", "devops-cicd-pt-br",
         "sre-incident-response-pt-br", "cloud-security-review-pt-br",
-        "finops-cost-review-pt-br", "code-review-pt-br"
+        "finops-cost-review-pt-br", "network-engineering-pt-br",
+        "ansible-automation-pt-br", "certification-study-pt-br",
+        "code-review-pt-br", "semantic-commit-pt-br"
     )
 }
 
-$SkillArguments = @("--yes", "skills@1.5.23", "add", "JonatanRocha2/vegapunk", "--skill")
+$SkillArguments = @("--yes", "skills@$SkillsCliVersion", "add", "JonatanRocha2/vegapunk", "--skill")
 $SkillArguments += $Skills
 $SkillArguments += @("-a", "codex", "-g", "--yes")
 Invoke-Checked -Program "npx" -Arguments $SkillArguments
 
 if (-not $NoCaveman) {
     Invoke-Checked -Program "npx" -Arguments @(
-        "--yes", "skills@1.5.23", "add",
-        "https://github.com/JuliusBrussee/caveman/tree/b5ec6351396b643a17cbbec4a6eee8b3fb9dd782",
+        "--yes", "skills@$SkillsCliVersion", "add",
+        "https://github.com/JuliusBrussee/caveman/tree/$CavemanCommit",
         "--skill", "caveman", "-a", "codex", "-g", "--yes"
     )
 }
 
 if ($WithCavemanProxy) {
-    Invoke-Checked -Program "npm" -Arguments @("install", "-g", "@caveman-ai/cli@1.2.5")
+    Invoke-Checked -Program "npm" -Arguments @("install", "-g", "@caveman-ai/cli@$CavemanCliVersion")
     Invoke-Checked -Program "caveman" -Arguments @("setup", "--install")
 }
 

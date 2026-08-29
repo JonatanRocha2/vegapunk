@@ -19,6 +19,15 @@ revisada antes de receber credenciais ou permissoes de escrita.
 - [Google SRE books](https://sre.google/books/)
 - [Kubernetes documentation](https://kubernetes.io/docs/)
 - [Terraform documentation](https://developer.hashicorp.com/terraform/docs)
+- [Documentação Ansible](https://docs.ansible.com/)
+- [Exames e preparação AWS Certification](https://aws.amazon.com/certification/exams/)
+- [Microsoft Credentials](https://learn.microsoft.com/credentials/certifications/)
+- [Certificações Google Cloud](https://cloud.google.com/learn/certification)
+- [Certificações HashiCorp](https://developer.hashicorp.com/certifications)
+- [Certificações Red Hat](https://www.redhat.com/en/services/certification)
+- [Conventional Commits](https://www.conventionalcommits.org/)
+- [IETF RFC Editor](https://www.rfc-editor.org/)
+- [MANRS network security](https://www.manrs.org/)
 - [NIST Cybersecurity Framework](https://www.nist.gov/cyberframework)
 - [OWASP ASVS](https://owasp.org/www-project-application-security-verification-standard/)
 
@@ -27,7 +36,7 @@ revisada antes de receber credenciais ou permissoes de escrita.
 | Fonte | Skills de destaque | Decisao |
 | --- | --- | --- |
 | `google/skills` | GKE basics e pilares do Google Cloud WAF | Oficial e excelente para aprofundar GCP |
-| `hashicorp/skills` | Terraform style, test, stacks e refactor-module | Oficial; instalar conforme o fluxo usado |
+| `hashicorp/agent-skills` | Terraform style, test, stacks e refactor-module | Oficial; instalar conforme o fluxo usado |
 | `microsoft/skills` | cloud-solution-architect | Oficial para arquitetura Azure |
 | `trailofbits/skills` | differential-review | Revisao de diff com foco forte em seguranca |
 | `getsentry/skills` | sentry-workflow | Incidentes e review com contexto de producao |
@@ -35,6 +44,11 @@ revisada antes de receber credenciais ou permissoes de escrita.
 | `coderabbitai/skills` | code-review | Util se o servico CodeRabbit fizer parte do fluxo |
 | `zxkane/aws-skills` | CDK, custo/operacoes e serverless EDA | Boa comunidade; nao e publicacao oficial da AWS |
 | `JuliusBrussee/caveman` | caveman | Economia de saida; proxy opcional para entrada |
+
+Nao foi encontrada uma Agent Skill oficial da Ansible nem dos vendors para
+preparacao de certificacoes. `ansible-automation` e `certification-study` sao
+skills autorais deste repositorio; a segunda usa guias, treinamentos e simulados
+oficiais como fontes atuais e recusa exam dumps ou questoes recordadas de provas.
 
 ## O que nao instalar por padrao
 
@@ -51,3 +65,5 @@ revisada antes de receber credenciais ou permissoes de escrita.
 3. Testar descrições com prompts positivos e negativos nos dois idiomas.
 4. Remover regras obsoletas em vez de acumular compatibilidade historica.
 5. Registrar mudancas de comportamento relevantes no historico Git.
+6. Receber atualizacoes externas por PR do Renovate, nunca por automerge, e
+   revisar diff, licenca, digest, telemetria e comportamento de rede.

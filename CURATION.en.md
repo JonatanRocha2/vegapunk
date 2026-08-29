@@ -19,6 +19,15 @@ instruction and must be reviewed before receiving credentials or write access.
 - [Google SRE books](https://sre.google/books/)
 - [Kubernetes documentation](https://kubernetes.io/docs/)
 - [Terraform documentation](https://developer.hashicorp.com/terraform/docs)
+- [Ansible documentation](https://docs.ansible.com/)
+- [AWS Certification exams and preparation](https://aws.amazon.com/certification/exams/)
+- [Microsoft Credentials](https://learn.microsoft.com/credentials/certifications/)
+- [Google Cloud certifications](https://cloud.google.com/learn/certification)
+- [HashiCorp certifications](https://developer.hashicorp.com/certifications)
+- [Red Hat certifications](https://www.redhat.com/en/services/certification)
+- [Conventional Commits](https://www.conventionalcommits.org/)
+- [IETF RFC Editor](https://www.rfc-editor.org/)
+- [MANRS network security](https://www.manrs.org/)
 - [NIST Cybersecurity Framework](https://www.nist.gov/cyberframework)
 - [OWASP ASVS](https://owasp.org/www-project-application-security-verification-standard/)
 
@@ -27,7 +36,7 @@ instruction and must be reviewed before receiving credentials or write access.
 | Source | Notable skills | Decision |
 | --- | --- | --- |
 | `google/skills` | GKE basics and Google Cloud WAF pillars | Official and excellent for deeper GCP work |
-| `hashicorp/skills` | Terraform style, test, stacks, and refactor-module | Official; install according to the workflow in use |
+| `hashicorp/agent-skills` | Terraform style, test, stacks, and refactor-module | Official; install according to the workflow in use |
 | `microsoft/skills` | cloud-solution-architect | Official Azure architecture guidance |
 | `trailofbits/skills` | differential-review | Strong security-focused differential review |
 | `getsentry/skills` | sentry-workflow | Incidents and review with production context |
@@ -35,6 +44,11 @@ instruction and must be reviewed before receiving credentials or write access.
 | `coderabbitai/skills` | code-review | Useful when CodeRabbit is part of the workflow |
 | `zxkane/aws-skills` | CDK, cost/operations, and serverless EDA | Good community source; not an official AWS publication |
 | `JuliusBrussee/caveman` | caveman | Output savings; optional proxy for input compression |
+
+No official Ansible Agent Skill or certification-preparation Agent Skill from
+these vendors was found. `ansible-automation` and `certification-study` are
+original skills in this repository; the latter uses current official guides,
+training, and practice materials and rejects exam dumps or recalled questions.
 
 ## Not Installed By Default
 
@@ -51,3 +65,5 @@ instruction and must be reviewed before receiving credentials or write access.
 3. Test descriptions with positive and negative prompts in both languages.
 4. Remove obsolete rules instead of accumulating historical compatibility.
 5. Record meaningful behavior changes in Git history.
+6. Receive external updates through Renovate PRs, never automerge them, and
+   review diffs, licensing, digests, telemetry, and network behavior.

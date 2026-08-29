@@ -4,7 +4,7 @@ description: Authors, reviews, tests, imports, refactors, and troubleshoots Terr
 license: MIT
 metadata:
   author: JonatanRocha2
-  version: "1.0"
+  version: "1.1"
   language: "en"
 ---
 
@@ -32,6 +32,14 @@ Preserve state integrity and make the smallest safe infrastructure change.
 - Pin provider ranges deliberately and commit the dependency lock file for root modules.
 - Do not add `ignore_changes` merely to hide unexplained drift.
 - Never run `apply`, `destroy`, forced unlock, or state mutation without explicit approval and scope confirmation.
+
+## Specialized Official Guidance
+
+For focused Terraform work, consult the relevant skill in HashiCorp's official
+[`hashicorp/agent-skills`](https://github.com/hashicorp/agent-skills) catalog,
+including style, tests, stacks, module refactoring, policy, and resource import.
+Use those instructions selectively rather than installing overlapping skills by
+default. Keep this skill as the provider-neutral safety and lifecycle workflow.
 
 ## Review Output
 

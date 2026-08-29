@@ -6,6 +6,10 @@ const root = new URL("../skills/", import.meta.url);
 const rootPath = fileURLToPath(root);
 const readmePath = fileURLToPath(new URL("../README.md", import.meta.url));
 const englishReadmePath = fileURLToPath(new URL("../README.en.md", import.meta.url));
+const powershellInstallerPath = fileURLToPath(new URL("../install.ps1", import.meta.url));
+const shellInstallerPath = fileURLToPath(new URL("../install.sh", import.meta.url));
+const workflowPath = fileURLToPath(new URL("../.github/workflows/validate.yml", import.meta.url));
+const renovatePath = fileURLToPath(new URL("../renovate.json", import.meta.url));
 const languages = ["en", "pt-br"];
 const names = new Set();
 const namesByLanguage = new Map();
@@ -57,8 +61,8 @@ for (const language of languages) {
     }
   }
 
-  if (languageNames.size !== 12) {
-    console.error(`FAIL ${language}: expected 12 skills, found ${languageNames.size}`);
+  if (languageNames.size !== 16) {
+    console.error(`FAIL ${language}: expected 16 skills, found ${languageNames.size}`);
     failures += 1;
   }
 }
@@ -83,6 +87,57 @@ for (const path of [readmePath, englishReadmePath]) {
     );
     failures += 1;
   }
+}
+
+const [powershellInstaller, shellInstaller, workflow, renovate] = await Promise.all([
+  readFile(powershellInstallerPath, "utf8"),
+  readFile(shellInstallerPath, "utf8"),
+  readFile(workflowPath, "utf8"),
+  readFile(renovatePath, "utf8"),
+]);
+
+const pins = {
+  skills: [
+    powershellInstaller.match(/^\$SkillsCliVersion = "([^"]+)"$/m)?.[1],
+    shellInstaller.match(/^skills_cli_version=(\S+)$/m)?.[1],
+    workflow.match(/^  SKILLS_CLI_VERSION: "([^"]+)"$/m)?.[1],
+  ],
+  cavemanRelease: [
+    powershellInstaller.match(/^\$CavemanVersion = "([^"]+)"$/m)?.[1],
+    shellInstaller.match(/^caveman_version=(\S+)$/m)?.[1],
+  ],
+  cavemanCommit: [
+    powershellInstaller.match(/^\$CavemanCommit = "([a-f0-9]{40})"$/m)?.[1],
+    shellInstaller.match(/^caveman_commit=([a-f0-9]{40})$/m)?.[1],
+  ],
+  cavemanCli: [
+    powershellInstaller.match(/^\$CavemanCliVersion = "([^"]+)"$/m)?.[1],
+    shellInstaller.match(/^caveman_cli_version=(\S+)$/m)?.[1],
+  ],
+};
+
+for (const [dependency, values] of Object.entries(pins)) {
+  if (values.some((value) => !value) || new Set(values).size !== 1) {
+    console.error(`FAIL inconsistent ${dependency} pins: ${values.join(", ")}`);
+    failures += 1;
+  }
+}
+
+const actionRefs = [...workflow.matchAll(/^\s*uses:\s*([^\s#]+)/gm)].map((match) => match[1]);
+if (!actionRefs.length || actionRefs.some((reference) => !/@[a-f0-9]{40}$/.test(reference))) {
+  console.error(`FAIL GitHub Actions must use full commit SHAs: ${actionRefs.join(", ")}`);
+  failures += 1;
+}
+if (!/^\s+persist-credentials:\s+false$/m.test(workflow)) {
+  console.error("FAIL checkout must disable persisted credentials");
+  failures += 1;
+}
+
+try {
+  JSON.parse(renovate);
+} catch (error) {
+  console.error(`FAIL invalid renovate.json: ${error.message}`);
+  failures += 1;
 }
 
 if (failures) process.exit(1);
