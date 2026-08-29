@@ -88,6 +88,22 @@ English versions live in `skills/en/`. Brazilian versions live in
 Caveman remains external and is installed directly from upstream. This avoids
 vendoring, preserves attribution and licensing, and enables controlled updates.
 
+## Official AWS Toolkit
+
+For detailed AWS service implementation, the
+[Agent Toolkit for AWS](https://github.com/aws/agent-toolkit-for-aws) is the
+official AWS-supported catalog. Add its marketplace to Codex:
+
+```bash
+codex plugin marketplace add aws/agent-toolkit-for-aws
+```
+
+Then use `/plugins` in Codex to review and install `aws-core`. `aws-agents` and
+`aws-data-analytics` are specialized alternatives. The default installer does
+not add the toolkit because it overlaps part of the local catalog and may
+configure an MCP with authenticated AWS access; review the account, Region, IAM,
+telemetry, and write permissions before enabling it.
+
 ## Caveman Proxy
 
 The default installer adds only the concise-output skill. The proxy, which

@@ -4,7 +4,7 @@ description: Designs and reviews AWS workloads using AWS Well-Architected guidan
 license: MIT
 metadata:
   author: JonatanRocha2
-  version: "1.0"
+  version: "1.1"
   language: "en"
 ---
 
@@ -31,6 +31,17 @@ Verify current service behavior, quotas, regional availability, and pricing in o
 - Treat multi-Region as an application and data-consistency design, not a checkbox.
 - Model request, storage, data transfer, NAT Gateway, logs, KMS, and cross-AZ costs.
 - Use CloudFormation, CDK, Terraform, or OpenTofu with preview and policy checks; do not mutate production from an unreviewed command.
+
+## Specialized Official Guidance
+
+For implementation-level AWS work, use the relevant skill or plugin from the
+official AWS-supported
+[`aws/agent-toolkit-for-aws`](https://github.com/aws/agent-toolkit-for-aws),
+including `aws-core`, `aws-agents`, `aws-data-analytics`, and service-specific
+skills. Keep this skill for architecture-wide requirements, trade-offs, and
+Well-Architected review. Before enabling the toolkit's MCP server, confirm the
+AWS identity, Region, account, least-privilege policy, audit trail, and whether
+the task requires read or write access.
 
 ## Output
 

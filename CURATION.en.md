@@ -13,6 +13,7 @@ instruction and must be reviewed before receiving credentials or write access.
 - [Agent Skills specification](https://agentskills.io/specification)
 - [Vercel Skills CLI](https://skills.sh/docs/cli)
 - [AWS Well-Architected](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html)
+- [Agent Toolkit for AWS](https://github.com/aws/agent-toolkit-for-aws)
 - [Google Cloud Well-Architected Framework](https://cloud.google.com/architecture/framework)
 - [Azure Well-Architected Framework](https://learn.microsoft.com/azure/well-architected/)
 - [Cloud Adoption Framework for Azure](https://learn.microsoft.com/azure/cloud-adoption-framework/)
@@ -35,6 +36,7 @@ instruction and must be reviewed before receiving credentials or write access.
 
 | Source | Notable skills | Decision |
 | --- | --- | --- |
+| `aws/agent-toolkit-for-aws` | aws-core, agents, data analytics, service skills, and MCP | Official and AWS-supported; prefer for detailed implementation |
 | `google/skills` | GKE basics and Google Cloud WAF pillars | Official and excellent for deeper GCP work |
 | `hashicorp/agent-skills` | Terraform style, test, stacks, and refactor-module | Official; install according to the workflow in use |
 | `microsoft/skills` | cloud-solution-architect | Official Azure architecture guidance |
@@ -45,8 +47,9 @@ instruction and must be reviewed before receiving credentials or write access.
 | `zxkane/aws-skills` | CDK, cost/operations, and serverless EDA | Good community source; not an official AWS publication |
 | `JuliusBrussee/caveman` | caveman | Output savings; optional proxy for input compression |
 
-No official Ansible Agent Skill or certification-preparation Agent Skill from
-these vendors was found. `ansible-automation` and `certification-study` are
+The Agent Toolkit for AWS is an operational catalog, not a certification-prep
+skill. No official Ansible Agent Skill or certification-preparation Agent Skill
+from these vendors was found. `ansible-automation` and `certification-study` are
 original skills in this repository; the latter uses current official guides,
 training, and practice materials and rejects exam dumps or recalled questions.
 

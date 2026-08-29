@@ -13,6 +13,7 @@ revisada antes de receber credenciais ou permissoes de escrita.
 - [Agent Skills specification](https://agentskills.io/specification)
 - [Vercel Skills CLI](https://skills.sh/docs/cli)
 - [AWS Well-Architected](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html)
+- [Agent Toolkit for AWS](https://github.com/aws/agent-toolkit-for-aws)
 - [Google Cloud Well-Architected Framework](https://cloud.google.com/architecture/framework)
 - [Azure Well-Architected Framework](https://learn.microsoft.com/azure/well-architected/)
 - [Cloud Adoption Framework for Azure](https://learn.microsoft.com/azure/cloud-adoption-framework/)
@@ -35,6 +36,7 @@ revisada antes de receber credenciais ou permissoes de escrita.
 
 | Fonte | Skills de destaque | Decisao |
 | --- | --- | --- |
+| `aws/agent-toolkit-for-aws` | aws-core, agents, data analytics, skills por serviço e MCP | Oficial e suportado pela AWS; preferir para implementação detalhada |
 | `google/skills` | GKE basics e pilares do Google Cloud WAF | Oficial e excelente para aprofundar GCP |
 | `hashicorp/agent-skills` | Terraform style, test, stacks e refactor-module | Oficial; instalar conforme o fluxo usado |
 | `microsoft/skills` | cloud-solution-architect | Oficial para arquitetura Azure |
@@ -45,10 +47,12 @@ revisada antes de receber credenciais ou permissoes de escrita.
 | `zxkane/aws-skills` | CDK, custo/operacoes e serverless EDA | Boa comunidade; nao e publicacao oficial da AWS |
 | `JuliusBrussee/caveman` | caveman | Economia de saida; proxy opcional para entrada |
 
-Nao foi encontrada uma Agent Skill oficial da Ansible nem dos vendors para
-preparacao de certificacoes. `ansible-automation` e `certification-study` sao
-skills autorais deste repositorio; a segunda usa guias, treinamentos e simulados
-oficiais como fontes atuais e recusa exam dumps ou questoes recordadas de provas.
+O Agent Toolkit for AWS e um catálogo operacional, nao uma skill de preparacao
+para certificacoes. Nao foi encontrada uma Agent Skill oficial da Ansible nem dos
+vendors para preparacao de certificacoes. `ansible-automation` e
+`certification-study` sao skills autorais deste repositorio; a segunda usa guias,
+treinamentos e simulados oficiais como fontes atuais e recusa exam dumps ou
+questoes recordadas de provas.
 
 ## O que nao instalar por padrao
 

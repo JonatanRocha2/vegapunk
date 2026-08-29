@@ -4,7 +4,7 @@ description: Projeta e revisa cargas de trabalho na AWS usando as orientações 
 license: MIT
 metadata:
   author: JonatanRocha2
-  version: "1.0"
+  version: "1.1"
   language: "pt-BR"
 ---
 
@@ -31,6 +31,17 @@ Verifique o comportamento atual dos serviços, as cotas, a disponibilidade regio
 - Trate múltiplas regiões como um design de aplicação e consistência de dados, não como uma opção a ser marcada.
 - Modele os custos de requisições, armazenamento, transferência de dados, NAT Gateway, logs, KMS e tráfego entre AZs.
 - Use CloudFormation, CDK, Terraform ou OpenTofu com pré-visualização e verificações de políticas; não altere a produção por meio de um comando não revisado.
+
+## Orientação oficial especializada
+
+Para implementação detalhada na AWS, use a skill ou o plugin relevante do
+[`aws/agent-toolkit-for-aws`](https://github.com/aws/agent-toolkit-for-aws),
+oficial e suportado pela AWS, incluindo `aws-core`, `aws-agents`,
+`aws-data-analytics` e skills específicas de serviços. Mantenha esta skill para
+requisitos amplos de arquitetura, trade-offs e revisão Well-Architected. Antes de
+habilitar o servidor MCP do toolkit, confirme identidade AWS, região, conta,
+política de privilégio mínimo, trilha de auditoria e se a tarefa exige acesso de
+leitura ou escrita.
 
 ## Saída
 
