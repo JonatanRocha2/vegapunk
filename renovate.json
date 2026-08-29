@@ -24,10 +24,11 @@
     {
       "customType": "regex",
       "description": "Update the Caveman skill release and immutable commit together",
-      "managerFilePatterns": ["/^install\\.(?:ps1|sh)$/"],
+      "managerFilePatterns": ["/^install\\.(?:ps1|sh)$/", "/^\\.github/workflows/validate\\.yml$/"],
       "matchStrings": [
         "# renovate: datasource=github-releases depName=JuliusBrussee/caveman\\s+\\$CavemanVersion = \"(?<currentValue>[^\"]+)\"\\s+\\$CavemanCommit = \"(?<currentDigest>[a-f0-9]{40})\"",
-        "# renovate: datasource=github-releases depName=JuliusBrussee/caveman\\s+caveman_version=(?<currentValue>\\S+)\\s+caveman_commit=(?<currentDigest>[a-f0-9]{40})"
+        "# renovate: datasource=github-releases depName=JuliusBrussee/caveman\\s+caveman_version=(?<currentValue>\\S+)\\s+caveman_commit=(?<currentDigest>[a-f0-9]{40})",
+        "# renovate: datasource=github-releases depName=JuliusBrussee/caveman\\s+CAVEMAN_VERSION: \"(?<currentValue>[^\"]+)\"\\s+CAVEMAN_COMMIT: \"(?<currentDigest>[a-f0-9]{40})\""
       ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "JuliusBrussee/caveman",

@@ -91,6 +91,8 @@ if [ "$install_aws_toolkit" -eq 1 ]; then
   git init --quiet "$aws_toolkit_temp"
   git -C "$aws_toolkit_temp" fetch --quiet --depth 1 \
     https://github.com/aws/agent-toolkit-for-aws.git "$aws_toolkit_commit"
+  git -C "$aws_toolkit_temp" sparse-checkout init --cone
+  git -C "$aws_toolkit_temp" sparse-checkout set skills/core-skills
   git -C "$aws_toolkit_temp" checkout --quiet --detach FETCH_HEAD
   npx --yes "skills@$skills_cli_version" add \
     "$aws_toolkit_temp/skills/core-skills" \
@@ -100,9 +102,16 @@ if [ "$install_aws_toolkit" -eq 1 ]; then
 fi
 
 if [ "$install_caveman" -eq 1 ]; then
-  npx --yes "skills@$skills_cli_version" add \
-    "https://github.com/JuliusBrussee/caveman/tree/$caveman_commit" \
-    --skill caveman -a codex -g --yes
+  caveman_temp=$(mktemp -d)
+  trap 'rm -rf "$caveman_temp"' EXIT HUP INT TERM
+  git init --quiet "$caveman_temp"
+  git -C "$caveman_temp" fetch --quiet --depth 1 \
+    https://github.com/JuliusBrussee/caveman.git "$caveman_commit"
+  git -C "$caveman_temp" checkout --quiet --detach FETCH_HEAD
+  npx --yes "skills@$skills_cli_version" add "$caveman_temp" \
+    --skill caveman -a codex -g --copy --yes
+  rm -rf "$caveman_temp"
+  trap - EXIT HUP INT TERM
 fi
 
 if [ "$with_caveman_proxy" -eq 1 ]; then

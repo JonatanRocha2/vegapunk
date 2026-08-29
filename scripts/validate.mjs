@@ -105,10 +105,12 @@ const pins = {
   cavemanRelease: [
     powershellInstaller.match(/^\$CavemanVersion = "([^"]+)"$/m)?.[1],
     shellInstaller.match(/^caveman_version=(\S+)$/m)?.[1],
+    workflow.match(/^  CAVEMAN_VERSION: "([^"]+)"$/m)?.[1],
   ],
   cavemanCommit: [
     powershellInstaller.match(/^\$CavemanCommit = "([a-f0-9]{40})"$/m)?.[1],
     shellInstaller.match(/^caveman_commit=([a-f0-9]{40})$/m)?.[1],
+    workflow.match(/^  CAVEMAN_COMMIT: "([a-f0-9]{40})"$/m)?.[1],
   ],
   cavemanCli: [
     powershellInstaller.match(/^\$CavemanCliVersion = "([^"]+)"$/m)?.[1],

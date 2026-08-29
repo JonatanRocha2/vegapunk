@@ -20,6 +20,9 @@ env:
   # renovate: datasource=github-digest depName=aws/agent-toolkit-for-aws
   AWS_TOOLKIT_REF: "main"
   AWS_TOOLKIT_COMMIT: "ed19c44c46c9c3a12ef0ff5bbf88161b75d3efbe"
+  # renovate: datasource=github-releases depName=JuliusBrussee/caveman
+  CAVEMAN_VERSION: "v2.3.1"
+  CAVEMAN_COMMIT: "b5ec6351396b643a17cbbec4a6eee8b3fb9dd782"
 
 jobs:
   validate:
@@ -67,6 +70,19 @@ jobs:
           git init --quiet "$aws_toolkit_temp"
           git -C "$aws_toolkit_temp" fetch --quiet --depth 1 \
             https://github.com/aws/agent-toolkit-for-aws.git "$AWS_TOOLKIT_COMMIT"
+          git -C "$aws_toolkit_temp" sparse-checkout init --cone
+          git -C "$aws_toolkit_temp" sparse-checkout set skills/core-skills
           git -C "$aws_toolkit_temp" checkout --quiet --detach FETCH_HEAD
           npx --yes "skills@$SKILLS_CLI_VERSION" add \
             "$aws_toolkit_temp/skills/core-skills" --list
+
+      - name: Verify Caveman skill discovery
+        run: |
+          caveman_temp=$(mktemp -d)
+          trap 'rm -rf "$caveman_temp"' EXIT
+          git init --quiet "$caveman_temp"
+          git -C "$caveman_temp" fetch --quiet --depth 1 \
+            https://github.com/JuliusBrussee/caveman.git "$CAVEMAN_COMMIT"
+          git -C "$caveman_temp" checkout --quiet --detach FETCH_HEAD
+          npx --yes "skills@$SKILLS_CLI_VERSION" add "$caveman_temp" \
+            --skill caveman --list

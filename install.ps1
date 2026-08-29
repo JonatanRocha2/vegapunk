@@ -89,6 +89,12 @@ if (-not $NoAwsToolkit) {
             "https://github.com/aws/agent-toolkit-for-aws.git", $AwsToolkitCommit
         )
         Invoke-Checked -Program "git" -Arguments @(
+            "-C", $AwsToolkitTemp, "sparse-checkout", "init", "--cone"
+        )
+        Invoke-Checked -Program "git" -Arguments @(
+            "-C", $AwsToolkitTemp, "sparse-checkout", "set", "skills/core-skills"
+        )
+        Invoke-Checked -Program "git" -Arguments @(
             "-C", $AwsToolkitTemp, "checkout", "--quiet", "--detach", "FETCH_HEAD"
         )
         Invoke-Checked -Program "npx" -Arguments @(
@@ -104,11 +110,25 @@ if (-not $NoAwsToolkit) {
 }
 
 if (-not $NoCaveman) {
-    Invoke-Checked -Program "npx" -Arguments @(
-        "--yes", "skills@$SkillsCliVersion", "add",
-        "https://github.com/JuliusBrussee/caveman/tree/$CavemanCommit",
-        "--skill", "caveman", "-a", "codex", "-g", "--yes"
-    )
+    $CavemanTemp = Join-Path ([IO.Path]::GetTempPath()) "vegapunk-caveman-$([guid]::NewGuid())"
+    try {
+        Invoke-Checked -Program "git" -Arguments @("init", "--quiet", $CavemanTemp)
+        Invoke-Checked -Program "git" -Arguments @(
+            "-C", $CavemanTemp, "fetch", "--quiet", "--depth", "1",
+            "https://github.com/JuliusBrussee/caveman.git", $CavemanCommit
+        )
+        Invoke-Checked -Program "git" -Arguments @(
+            "-C", $CavemanTemp, "checkout", "--quiet", "--detach", "FETCH_HEAD"
+        )
+        Invoke-Checked -Program "npx" -Arguments @(
+            "--yes", "skills@$SkillsCliVersion", "add", $CavemanTemp,
+            "--skill", "caveman", "-a", "codex", "-g", "--copy", "--yes"
+        )
+    } finally {
+        if (Test-Path -LiteralPath $CavemanTemp) {
+            Remove-Item -LiteralPath $CavemanTemp -Recurse -Force
+        }
+    }
 }
 
 if ($WithCavemanProxy) {
