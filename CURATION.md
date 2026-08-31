@@ -2,7 +2,7 @@
 
 [English](CURATION.en.md) | **Português (Brasil)**
 
-Revisado em 2026-08-29. A selecao privilegia documentacao oficial, escopo claro,
+Revisado em 2026-08-31. A selecao privilegia documentacao oficial, escopo claro,
 manutencao ativa, progressive disclosure e baixo risco operacional. Popularidade
 nao substitui auditoria: uma skill e instrucao executavel pelo agente e deve ser
 revisada antes de receber credenciais ou permissoes de escrita.
@@ -46,6 +46,8 @@ revisada antes de receber credenciais ou permissoes de escrita.
 | `coderabbitai/skills` | code-review | Util se o servico CodeRabbit fizer parte do fluxo |
 | `zxkane/aws-skills` | CDK, custo/operacoes e serverless EDA | Boa comunidade; nao e publicacao oficial da AWS |
 | `JuliusBrussee/caveman` | caveman | Economia de saida; proxy opcional para entrada |
+| `mattpocock/skills` | handoff | Skill MIT pequena para continuidade entre sessoes com remocao de dados sensiveis; instalada por padrao |
+| `anthropics/skills` | frontend-design | Orientacao de design Apache-2.0 sem dependencia de runtime; instalada por padrao |
 
 O Agent Toolkit for AWS e um catálogo operacional, nao uma skill de preparacao
 para certificacoes. Nao foi encontrada uma Agent Skill oficial da Ansible nem dos

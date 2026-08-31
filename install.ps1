@@ -4,6 +4,7 @@ param(
     [switch]$WithCavemanProxy,
     [switch]$NoCaveman,
     [switch]$NoAwsToolkit,
+    [switch]$NoRecommendedSkills,
     [switch]$AllowElevated
 )
 
@@ -19,6 +20,12 @@ $CavemanCliVersion = "1.2.5"
 # renovate: datasource=github-digest depName=aws/agent-toolkit-for-aws
 $AwsToolkitRef = "main"
 $AwsToolkitCommit = "ed19c44c46c9c3a12ef0ff5bbf88161b75d3efbe"
+# renovate: datasource=github-digest depName=mattpocock/skills
+$HandoffRef = "main"
+$HandoffCommit = "6654f6b60cd9d5be8b54c6fafe44346dabeb3b76"
+# renovate: datasource=github-digest depName=anthropics/skills
+$FrontendDesignRef = "main"
+$FrontendDesignCommit = "3b3fad96af16a10759d930941b4520ba0c40edae"
 
 $CurrentIdentity = [Security.Principal.WindowsIdentity]::GetCurrent()
 $CurrentPrincipal = [Security.Principal.WindowsPrincipal]::new($CurrentIdentity)
@@ -50,6 +57,33 @@ function Invoke-Checked {
     & $Program @Arguments
     if ($LASTEXITCODE -ne 0) {
         throw "$Program failed with exit code $LASTEXITCODE"
+    }
+}
+
+function Install-PinnedSkill {
+    param(
+        [string]$Repository,
+        [string]$Commit,
+        [string]$Skill
+    )
+
+    $TempDirectory = Join-Path ([IO.Path]::GetTempPath()) "vegapunk-$Skill-$([guid]::NewGuid())"
+    try {
+        Invoke-Checked -Program "git" -Arguments @("init", "--quiet", $TempDirectory)
+        Invoke-Checked -Program "git" -Arguments @(
+            "-C", $TempDirectory, "fetch", "--quiet", "--depth", "1", $Repository, $Commit
+        )
+        Invoke-Checked -Program "git" -Arguments @(
+            "-C", $TempDirectory, "checkout", "--quiet", "--detach", "FETCH_HEAD"
+        )
+        Invoke-Checked -Program "npx" -Arguments @(
+            "--yes", "skills@$SkillsCliVersion", "add", $TempDirectory,
+            "--skill", $Skill, "-a", "codex", "-g", "--copy", "--yes"
+        )
+    } finally {
+        if (Test-Path -LiteralPath $TempDirectory) {
+            Remove-Item -LiteralPath $TempDirectory -Recurse -Force
+        }
     }
 }
 
@@ -109,26 +143,22 @@ if (-not $NoAwsToolkit) {
     }
 }
 
+if (-not $NoRecommendedSkills) {
+    Install-PinnedSkill `
+        -Repository "https://github.com/mattpocock/skills.git" `
+        -Commit $HandoffCommit `
+        -Skill "handoff"
+    Install-PinnedSkill `
+        -Repository "https://github.com/anthropics/skills.git" `
+        -Commit $FrontendDesignCommit `
+        -Skill "frontend-design"
+}
+
 if (-not $NoCaveman) {
-    $CavemanTemp = Join-Path ([IO.Path]::GetTempPath()) "vegapunk-caveman-$([guid]::NewGuid())"
-    try {
-        Invoke-Checked -Program "git" -Arguments @("init", "--quiet", $CavemanTemp)
-        Invoke-Checked -Program "git" -Arguments @(
-            "-C", $CavemanTemp, "fetch", "--quiet", "--depth", "1",
-            "https://github.com/JuliusBrussee/caveman.git", $CavemanCommit
-        )
-        Invoke-Checked -Program "git" -Arguments @(
-            "-C", $CavemanTemp, "checkout", "--quiet", "--detach", "FETCH_HEAD"
-        )
-        Invoke-Checked -Program "npx" -Arguments @(
-            "--yes", "skills@$SkillsCliVersion", "add", $CavemanTemp,
-            "--skill", "caveman", "-a", "codex", "-g", "--copy", "--yes"
-        )
-    } finally {
-        if (Test-Path -LiteralPath $CavemanTemp) {
-            Remove-Item -LiteralPath $CavemanTemp -Recurse -Force
-        }
-    }
+    Install-PinnedSkill `
+        -Repository "https://github.com/JuliusBrussee/caveman.git" `
+        -Commit $CavemanCommit `
+        -Skill "caveman"
 }
 
 if ($WithCavemanProxy) {

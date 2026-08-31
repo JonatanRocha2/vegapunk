@@ -27,9 +27,9 @@ curl -fsSL https://raw.githubusercontent.com/JonatanRocha2/vegapunk/main/install
 ```
 
 Os comandos instalam globalmente as 16 skills em inglês, as skills oficiais do
-`aws-core` e a skill MIT do [Caveman](https://github.com/JuliusBrussee/caveman)
-para o Codex. Reexecute o instalador para atualizar e reinicie o Codex se as
-skills não aparecerem.
+`aws-core`, as skills selecionadas `handoff` e `frontend-design` e a skill MIT do
+[Caveman](https://github.com/JuliusBrussee/caveman) para o Codex. Reexecute o
+instalador para atualizar e reinicie o Codex se as skills não aparecerem.
 
 Requisitos: Node.js 22.20 ou mais recente e Git. O `skills` CLI envia telemetria
 anônima por padrão; defina `DISABLE_TELEMETRY=1` antes do comando para desativar.
@@ -39,7 +39,7 @@ script primeiro em ambientes sensíveis. Veja [SECURITY.md](SECURITY.md).
 ## Escolher Idioma
 
 Somente um pack deve ser instalado para evitar ativações duplicadas.
-As skills externas oficiais do `aws-core` são publicadas pela AWS somente em
+As skills externas `aws-core`, `handoff` e `frontend-design` são publicadas em
 inglês e são as mesmas nos dois packs.
 
 Inglês, a partir de um clone:
@@ -88,6 +88,20 @@ As versões em inglês ficam em `skills/en/`. As versões brasileiras ficam em
 
 O Caveman permanece externo e é instalado diretamente do upstream. Isso evita
 vendoring, preserva autoria e licença e permite atualizações controladas.
+
+## Skills externas recomendadas
+
+O instalador padrão também copia duas skills em inglês, selecionadas com escopo
+restrito e fixadas em commits imutáveis dos upstreams:
+
+- [`handoff`](https://github.com/mattpocock/skills) resume uma sessão em um
+  documento de transição com dados sensíveis removidos. Licença: MIT.
+- [`frontend-design`](https://github.com/anthropics/skills) orienta interfaces
+  distintas e responsivas sem adicionar ferramenta de runtime. Licença:
+  Apache-2.0.
+
+Nenhuma delas solicita credenciais ou instala executáveis. Para não instalá-las,
+use `-NoRecommendedSkills` ou `--no-recommended-skills`.
 
 ## Toolkit Oficial da AWS
 

@@ -8,12 +8,15 @@ Agent Skills are executable instructions for an agent. Treat changes to
 ## Trust Model
 
 - The 16 bilingual skills in this repository are original MIT-licensed content.
-- The installer runs a version-pinned npm `skills` CLI and installs the Caveman
-  skill and official `aws-core` skills directly from upstream at immutable
-  commits.
+- The installer runs a version-pinned npm `skills` CLI and copies the Caveman,
+  `handoff`, `frontend-design`, and official `aws-core` skills directly from
+  upstream at immutable commits.
 - The `aws-core` installation copies Agent Skills only. It does not configure the
   AWS MCP Server, authenticate an account, or grant AWS permissions. Use
   `-NoAwsToolkit` or `--no-aws-toolkit` to skip it.
+- `handoff` and `frontend-design` contain instructions and references only. They
+  do not install executables or request credentials. Use `-NoRecommendedSkills`
+  or `--no-recommended-skills` to skip them.
 - The Caveman proxy is optional, installs another npm package, and may forward
   traffic to the provider. It is never enabled without `-WithCavemanProxy` or
   `--with-caveman-proxy`.
@@ -38,10 +41,11 @@ Agent Skills are executable instructions for an agent. Treat changes to
 
 ## Automated Updates
 
-`renovate.json` tracks `skills`, the `aws-core` commit, the Caveman skill release
-and immutable commit, and `@caveman-ai/cli`. Renovate waits three days after
-publication and opens PRs without automerge. The configuration takes effect only
-after enabling the Renovate GitHub App for the repository.
+`renovate.json` tracks `skills`, the `aws-core`, `handoff`, and `frontend-design`
+commits, the Caveman skill release and immutable commit, and
+`@caveman-ai/cli`. Renovate waits three days after publication and opens PRs
+without automerge. The configuration takes effect only after enabling the
+Renovate GitHub App for the repository.
 
 ## Reporting A Vulnerability
 

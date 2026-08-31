@@ -23,6 +23,12 @@ env:
   # renovate: datasource=github-releases depName=JuliusBrussee/caveman
   CAVEMAN_VERSION: "v2.3.1"
   CAVEMAN_COMMIT: "b5ec6351396b643a17cbbec4a6eee8b3fb9dd782"
+  # renovate: datasource=github-digest depName=mattpocock/skills
+  HANDOFF_REF: "main"
+  HANDOFF_COMMIT: "6654f6b60cd9d5be8b54c6fafe44346dabeb3b76"
+  # renovate: datasource=github-digest depName=anthropics/skills
+  FRONTEND_DESIGN_REF: "main"
+  FRONTEND_DESIGN_COMMIT: "3b3fad96af16a10759d930941b4520ba0c40edae"
 
 jobs:
   validate:
@@ -86,3 +92,22 @@ jobs:
           git -C "$caveman_temp" checkout --quiet --detach FETCH_HEAD
           npx --yes "skills@$SKILLS_CLI_VERSION" add "$caveman_temp" \
             --skill caveman --list
+
+      - name: Verify recommended skill discovery
+        run: |
+          verify_skill() {
+            repository=$1
+            commit=$2
+            skill=$3
+            skill_temp=$(mktemp -d)
+            git init --quiet "$skill_temp"
+            git -C "$skill_temp" fetch --quiet --depth 1 "$repository" "$commit"
+            git -C "$skill_temp" checkout --quiet --detach FETCH_HEAD
+            npx --yes "skills@$SKILLS_CLI_VERSION" add "$skill_temp" \
+              --skill "$skill" --list
+            rm -rf "$skill_temp"
+          }
+          verify_skill https://github.com/mattpocock/skills.git \
+            "$HANDOFF_COMMIT" handoff
+          verify_skill https://github.com/anthropics/skills.git \
+            "$FRONTEND_DESIGN_COMMIT" frontend-design

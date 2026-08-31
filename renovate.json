@@ -45,6 +45,17 @@
       ],
       "datasourceTemplate": "github-digest",
       "depNameTemplate": "aws/agent-toolkit-for-aws"
+    },
+    {
+      "customType": "regex",
+      "description": "Update recommended skill commits",
+      "managerFilePatterns": ["/^install\\.(?:ps1|sh)$/", "/^\\.github/workflows/validate\\.yml$/"],
+      "matchStrings": [
+        "# renovate: datasource=github-digest depName=(?<depName>mattpocock/skills|anthropics/skills)\\s+\\$[A-Za-z]+Ref = \"(?<currentValue>[^\"]+)\"\\s+\\$[A-Za-z]+Commit = \"(?<currentDigest>[a-f0-9]{40})\"",
+        "# renovate: datasource=github-digest depName=(?<depName>mattpocock/skills|anthropics/skills)\\s+[a-z_]+_ref=(?<currentValue>\\S+)\\s+[a-z_]+_commit=(?<currentDigest>[a-f0-9]{40})",
+        "# renovate: datasource=github-digest depName=(?<depName>mattpocock/skills|anthropics/skills)\\s+[A-Z_]+_REF: \"(?<currentValue>[^\"]+)\"\\s+[A-Z_]+_COMMIT: \"(?<currentDigest>[a-f0-9]{40})\""
+      ],
+      "datasourceTemplate": "github-digest"
     }
   ],
   "packageRules": [
@@ -67,6 +78,11 @@
       "description": "Review the official AWS skill bundle as one external dependency",
       "matchPackageNames": ["aws/agent-toolkit-for-aws"],
       "groupName": "Official AWS skill bundle"
+    },
+    {
+      "description": "Review recommended skills as one external bundle",
+      "matchPackageNames": ["mattpocock/skills", "anthropics/skills"],
+      "groupName": "Recommended Agent Skills"
     }
   ]
 }

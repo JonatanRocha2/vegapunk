@@ -126,6 +126,26 @@ const pins = {
     shellInstaller.match(/^aws_toolkit_commit=([a-f0-9]{40})$/m)?.[1],
     workflow.match(/^  AWS_TOOLKIT_COMMIT: "([a-f0-9]{40})"$/m)?.[1],
   ],
+  handoffRef: [
+    powershellInstaller.match(/^\$HandoffRef = "([^"]+)"$/m)?.[1],
+    shellInstaller.match(/^handoff_ref=(\S+)$/m)?.[1],
+    workflow.match(/^  HANDOFF_REF: "([^"]+)"$/m)?.[1],
+  ],
+  handoffCommit: [
+    powershellInstaller.match(/^\$HandoffCommit = "([a-f0-9]{40})"$/m)?.[1],
+    shellInstaller.match(/^handoff_commit=([a-f0-9]{40})$/m)?.[1],
+    workflow.match(/^  HANDOFF_COMMIT: "([a-f0-9]{40})"$/m)?.[1],
+  ],
+  frontendDesignRef: [
+    powershellInstaller.match(/^\$FrontendDesignRef = "([^"]+)"$/m)?.[1],
+    shellInstaller.match(/^frontend_design_ref=(\S+)$/m)?.[1],
+    workflow.match(/^  FRONTEND_DESIGN_REF: "([^"]+)"$/m)?.[1],
+  ],
+  frontendDesignCommit: [
+    powershellInstaller.match(/^\$FrontendDesignCommit = "([a-f0-9]{40})"$/m)?.[1],
+    shellInstaller.match(/^frontend_design_commit=([a-f0-9]{40})$/m)?.[1],
+    workflow.match(/^  FRONTEND_DESIGN_COMMIT: "([a-f0-9]{40})"$/m)?.[1],
+  ],
 };
 
 for (const [dependency, values] of Object.entries(pins)) {

@@ -2,7 +2,7 @@
 
 **English** | [Português (Brasil)](CURATION.md)
 
-Reviewed on 2026-08-29. This selection prioritizes official documentation,
+Reviewed on 2026-08-31. This selection prioritizes official documentation,
 clear scope, active maintenance, progressive disclosure, and low operational
 risk. Popularity is not a substitute for auditing: a skill is executable agent
 instruction and must be reviewed before receiving credentials or write access.
@@ -46,6 +46,8 @@ instruction and must be reviewed before receiving credentials or write access.
 | `coderabbitai/skills` | code-review | Useful when CodeRabbit is part of the workflow |
 | `zxkane/aws-skills` | CDK, cost/operations, and serverless EDA | Good community source; not an official AWS publication |
 | `JuliusBrussee/caveman` | caveman | Output savings; optional proxy for input compression |
+| `mattpocock/skills` | handoff | Small MIT skill for redacted continuity between sessions; installed by default |
+| `anthropics/skills` | frontend-design | Apache-2.0 design guidance with no runtime dependency; installed by default |
 
 The Agent Toolkit for AWS is an operational catalog, not a certification-prep
 skill. No official Ansible Agent Skill or certification-preparation Agent Skill

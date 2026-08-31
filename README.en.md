@@ -27,9 +27,9 @@ curl -fsSL https://raw.githubusercontent.com/JonatanRocha2/vegapunk/main/install
 ```
 
 These commands globally install the 16 English skills, the official `aws-core`
-skills, and the MIT [Caveman](https://github.com/JuliusBrussee/caveman) skill for
-Codex. Rerun the installer to update and restart Codex if the skills do not
-appear.
+skills, the curated `handoff` and `frontend-design` skills, and the MIT
+[Caveman](https://github.com/JuliusBrussee/caveman) skill for Codex. Rerun the
+installer to update and restart Codex if the skills do not appear.
 
 Requirements: Node.js 22.20 or newer and Git. The `skills` CLI sends anonymous telemetry
 by default; set `DISABLE_TELEMETRY=1` before running the command to opt out.
@@ -39,8 +39,8 @@ first in sensitive environments. See [SECURITY.en.md](SECURITY.en.md).
 ## Choose A Language
 
 Install only one pack to avoid duplicate activations.
-The external official `aws-core` skills are published by AWS in English and are
-the same for both language packs.
+The external `aws-core`, `handoff`, and `frontend-design` skills are published
+in English and are the same for both language packs.
 
 English, from a local clone:
 
@@ -90,6 +90,19 @@ English versions live in `skills/en/`. Brazilian versions live in
 
 Caveman remains external and is installed directly from upstream. This avoids
 vendoring, preserves attribution and licensing, and enables controlled updates.
+
+## Recommended External Skills
+
+The default installer also copies two narrowly selected English skills at
+immutable upstream commits:
+
+- [`handoff`](https://github.com/mattpocock/skills) compacts a session into a
+  redacted handoff document for another agent or context window. License: MIT.
+- [`frontend-design`](https://github.com/anthropics/skills) guides distinctive,
+  responsive interface design without adding a runtime tool. License: Apache-2.0.
+
+Neither skill requests credentials or installs an executable. Use
+`-NoRecommendedSkills` or `--no-recommended-skills` to skip both.
 
 ## Official AWS Toolkit
 

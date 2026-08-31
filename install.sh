@@ -4,6 +4,7 @@ set -eu
 with_caveman_proxy=0
 install_caveman=1
 install_aws_toolkit=1
+install_recommended_skills=1
 language=en
 allow_elevated=0
 
@@ -17,12 +18,19 @@ caveman_cli_version=1.2.5
 # renovate: datasource=github-digest depName=aws/agent-toolkit-for-aws
 aws_toolkit_ref=main
 aws_toolkit_commit=ed19c44c46c9c3a12ef0ff5bbf88161b75d3efbe
+# renovate: datasource=github-digest depName=mattpocock/skills
+handoff_ref=main
+handoff_commit=6654f6b60cd9d5be8b54c6fafe44346dabeb3b76
+# renovate: datasource=github-digest depName=anthropics/skills
+frontend_design_ref=main
+frontend_design_commit=3b3fad96af16a10759d930941b4520ba0c40edae
 
 while [ "$#" -gt 0 ]; do
   case "$1" in
     --with-caveman-proxy) with_caveman_proxy=1 ;;
     --no-caveman) install_caveman=0 ;;
     --no-aws-toolkit) install_aws_toolkit=0 ;;
+    --no-recommended-skills) install_recommended_skills=0 ;;
     --allow-elevated) allow_elevated=1 ;;
     --lang)
       if [ "$#" -lt 2 ]; then
@@ -83,6 +91,21 @@ if ! node -e 'const [a,b]=process.versions.node.split(".").map(Number); process.
   exit 1
 fi
 
+install_pinned_skill() {
+  repository=$1
+  commit=$2
+  skill=$3
+  pinned_skill_temp=$(mktemp -d)
+  trap 'rm -rf "$pinned_skill_temp"' EXIT HUP INT TERM
+  git init --quiet "$pinned_skill_temp"
+  git -C "$pinned_skill_temp" fetch --quiet --depth 1 "$repository" "$commit"
+  git -C "$pinned_skill_temp" checkout --quiet --detach FETCH_HEAD
+  npx --yes "skills@$skills_cli_version" add "$pinned_skill_temp" \
+    --skill "$skill" -a codex -g --copy --yes
+  rm -rf "$pinned_skill_temp"
+  trap - EXIT HUP INT TERM
+}
+
 npx --yes "skills@$skills_cli_version" add JonatanRocha2/vegapunk --skill "$@" -a codex -g --yes
 
 if [ "$install_aws_toolkit" -eq 1 ]; then
@@ -101,17 +124,16 @@ if [ "$install_aws_toolkit" -eq 1 ]; then
   trap - EXIT HUP INT TERM
 fi
 
+if [ "$install_recommended_skills" -eq 1 ]; then
+  install_pinned_skill \
+    https://github.com/mattpocock/skills.git "$handoff_commit" handoff
+  install_pinned_skill \
+    https://github.com/anthropics/skills.git "$frontend_design_commit" frontend-design
+fi
+
 if [ "$install_caveman" -eq 1 ]; then
-  caveman_temp=$(mktemp -d)
-  trap 'rm -rf "$caveman_temp"' EXIT HUP INT TERM
-  git init --quiet "$caveman_temp"
-  git -C "$caveman_temp" fetch --quiet --depth 1 \
-    https://github.com/JuliusBrussee/caveman.git "$caveman_commit"
-  git -C "$caveman_temp" checkout --quiet --detach FETCH_HEAD
-  npx --yes "skills@$skills_cli_version" add "$caveman_temp" \
-    --skill caveman -a codex -g --copy --yes
-  rm -rf "$caveman_temp"
-  trap - EXIT HUP INT TERM
+  install_pinned_skill \
+    https://github.com/JuliusBrussee/caveman.git "$caveman_commit" caveman
 fi
 
 if [ "$with_caveman_proxy" -eq 1 ]; then
