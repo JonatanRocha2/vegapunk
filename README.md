@@ -36,6 +36,44 @@ anônima por padrão; defina `DISABLE_TELEMETRY=1` antes do comando para desativ
 Executar um script remoto implica confiança no conteúdo atual de `main`; revise o
 script primeiro em ambientes sensíveis. Veja [SECURITY.md](SECURITY.md).
 
+## Instalar Node.js
+
+O instalador requer Node.js 22.20 ou mais recente. A versão LTS atual é
+recomendada.
+
+Windows com `winget`:
+
+```powershell
+winget install --id OpenJS.NodeJS.LTS --exact
+```
+
+Feche e reabra o terminal após a instalação.
+
+Linux, macOS ou Google Cloud Workstations podem usar `nvm`. Como o `nvm` e o
+Node.js ficam em `$HOME`, a instalação persiste no disco da Cloud Workstation:
+
+```bash
+export NVM_DIR="$HOME/.nvm"
+test -d "$NVM_DIR/.git" || git clone --branch v0.40.3 --depth 1 \
+  https://github.com/nvm-sh/nvm.git "$NVM_DIR"
+
+profile="$HOME/.bashrc"
+[ -n "${ZSH_VERSION:-}" ] && profile="$HOME/.zshrc"
+grep -q 'NVM_DIR="$HOME/.nvm"' "$profile" 2>/dev/null || \
+  printf '\nexport NVM_DIR="$HOME/.nvm"\n[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"\n' >> "$profile"
+
+. "$NVM_DIR/nvm.sh"
+nvm install --lts
+nvm alias default 'lts/*'
+```
+
+Valide a instalação:
+
+```bash
+node --version
+npm --version
+```
+
 ## Escolher Idioma
 
 Somente um pack deve ser instalado para evitar ativações duplicadas.
