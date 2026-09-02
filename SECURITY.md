@@ -1,55 +1,54 @@
-# Segurança
+# Security
 
-[English](SECURITY.en.md) | **Português (Brasil)**
+Agent Skills are executable instructions for an agent. Treat changes to
+`SKILL.md`, installers, and external dependencies as code changes.
 
-Agent Skills são instruções executáveis pelo agente. Trate alterações em
-`SKILL.md`, instaladores e dependências externas como mudanças de código.
+## Trust Model
 
-## Modelo de confiança
-
-- As 17 skills bilíngues deste repositório são conteúdo MIT; `learning-journal`
-  reconhece a inspiração na skill MIT `apxxrv/session-teacher`.
-- O instalador executa o `skills` CLI do npm com versão fixa e copia as skills
-  Caveman, `handoff`, `frontend-design` e as skills oficiais do `aws-core`
-  diretamente dos upstreams em commits imutáveis.
-- A instalação do `aws-core` copia somente Agent Skills. Ela não configura o AWS
-  MCP Server, não autentica uma conta e não concede permissões AWS. Use
-  `-NoAwsToolkit` ou `--no-aws-toolkit` para não instalá-la.
-- `handoff` e `frontend-design` contêm somente instruções e referências. Elas não
-  instalam executáveis nem solicitam credenciais. Use `-NoRecommendedSkills` ou
-  `--no-recommended-skills` para não instalá-las.
-- O proxy Caveman é opcional, instala outro pacote npm e pode encaminhar tráfego
-  ao provider. Ele nunca é habilitado sem `-WithCavemanProxy` ou
+- The 17 English skills in this repository are MIT-licensed;
+  `learning-journal` acknowledges inspiration from the MIT-licensed
+  `apxxrv/session-teacher` skill.
+- The installer runs a version-pinned npm `skills` CLI and copies the Caveman,
+  `handoff`, `frontend-design`, and official `aws-core` skills directly from
+  upstream at immutable commits.
+- The `aws-core` installation copies Agent Skills only. It does not configure the
+  AWS MCP Server, authenticate an account, or grant AWS permissions. Use
+  `-NoAwsToolkit` or `--no-aws-toolkit` to skip it.
+- `handoff` and `frontend-design` contain instructions and references only. They
+  do not install executables or request credentials. Use `-NoRecommendedSkills`
+  or `--no-recommended-skills` to skip them.
+- The Caveman proxy is optional, installs another npm package, and may forward
+  traffic to the provider. It is never enabled without `-WithCavemanProxy` or
   `--with-caveman-proxy`.
-- Os instaladores recusam execução elevada por padrão para limitar o impacto de
-  uma dependência comprometida. Use a opção de override apenas após revisar o
-  script e quando a instalação realmente exigir esse privilégio.
+- Installers refuse elevated execution by default to limit the impact of a
+  compromised dependency. Use the override only after reviewing the script and
+  when installation genuinely requires that privilege.
 
 ## Guardrails
 
-- Revise scripts remotos antes de usar `iex` ou pipe para `sh`, principalmente
-  quando o repositório ou o pin tiver mudado.
-- Nunca forneça segredos, tokens cloud ou acesso de produção a uma skill antes de
-  revisar seu conteúdo e limitar as permissões da sessão.
-- Use credenciais temporárias e de privilégio mínimo; mantenha ambientes de
-  estudo e teste separados da produção.
-- Não aceite mudanças destrutivas sem diff ou plano, alvo explícito, backup ou
-  rollback e aprovação humana.
-- Não faça automerge de atualizações externas. Confira autoria, licença,
-  changelog, diff do release, digest e alterações de telemetria ou rede.
-- Rode `npm test`, verifique a sintaxe do instalador correspondente e faça uma
-  instalação sem credenciais antes de aprovar uma atualização.
+- Review remote scripts before using `iex` or piping to `sh`, especially after
+  the repository or a pin changes.
+- Never provide secrets, cloud tokens, or production access to a skill before
+  reviewing its content and limiting the session's permissions.
+- Use temporary least-privilege credentials and keep study and test environments
+  separate from production.
+- Do not accept destructive changes without a diff or plan, explicit target,
+  backup or rollback, and human approval.
+- Do not automerge external updates. Review authorship, licensing, changelog,
+  release diff, digest, and telemetry or network changes.
+- Run `npm test`, check the relevant installer syntax, and perform a
+  credential-free installation before approving an update.
 
-## Atualizações automatizadas
+## Automated Updates
 
-O `renovate.json` acompanha `skills`, os commits de `aws-core`, `handoff` e
-`frontend-design`, a release e o commit imutável da skill Caveman e
-`@caveman-ai/cli`. O Renovate espera três dias após uma publicação e abre PRs sem
-automerge. A configuração só entra em operação após habilitar o Renovate GitHub
-App para o repositório.
+`renovate.json` tracks `skills`, the `aws-core`, `handoff`, and `frontend-design`
+commits, the Caveman skill release and immutable commit, and
+`@caveman-ai/cli`. Renovate waits three days after publication and opens PRs
+without automerge. The configuration takes effect only after enabling the
+Renovate GitHub App for the repository.
 
-## Reportar vulnerabilidade
+## Reporting A Vulnerability
 
-Não publique credenciais nem detalhes exploráveis em uma issue. Prefira o canal
-privado de security advisories do GitHub; se ele não estiver habilitado, contate
-o mantenedor sem incluir segredos e combine um canal privado.
+Do not publish credentials or exploitable details in an issue. Prefer GitHub's
+private security advisory channel; if it is unavailable, contact the maintainer
+without secrets and arrange a private channel.

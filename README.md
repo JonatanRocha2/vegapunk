@@ -1,18 +1,13 @@
 # Vegapunk Skills
 
-[English](README.en.md) | **Português (Brasil)**
+A personal Codex skills collection focused on cloud, DevOps, infrastructure,
+architecture, operations, code review, and continuous learning.
 
-Curadoria pessoal de skills para Codex focada em cloud, DevOps, infraestrutura,
-arquitetura, operações, code review e aprendizado contínuo. Cada skill possui
-duas versões completas: inglês e português brasileiro.
+The repository follows the open [Agent Skills](https://agentskills.io) standard
+and uses progressive disclosure: the agent loads a skill's detailed instructions
+only when a task matches its description.
 
-O repositório segue o padrão aberto [Agent Skills](https://agentskills.io) e usa
-progressive disclosure: o agente carrega os detalhes de uma skill somente quando
-a tarefa corresponde à sua descrição.
-
-## Instalar tudo
-
-O idioma padrão é inglês.
+## Install Everything
 
 Windows PowerShell:
 
@@ -20,37 +15,38 @@ Windows PowerShell:
 irm https://raw.githubusercontent.com/JonatanRocha2/vegapunk/main/install.ps1 | iex
 ```
 
-Linux, macOS ou WSL:
+Linux, macOS, or WSL:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/JonatanRocha2/vegapunk/main/install.sh | sh
 ```
 
-Os comandos instalam globalmente as 17 skills em inglês, as skills oficiais do
-`aws-core`, as skills selecionadas `handoff` e `frontend-design` e a skill MIT do
-[Caveman](https://github.com/JuliusBrussee/caveman) para o Codex. Reexecute o
-instalador para atualizar e reinicie o Codex se as skills não aparecerem.
+These commands globally install the 17 English skills, the official `aws-core`
+skills, the curated `handoff` and `frontend-design` skills, and the MIT
+[Caveman](https://github.com/JuliusBrussee/caveman) skill for Codex. Rerun the
+installer to update and restart Codex if the skills do not appear.
 
-Requisitos: Node.js 22.20 ou mais recente e Git. O `skills` CLI envia telemetria
-anônima por padrão; defina `DISABLE_TELEMETRY=1` antes do comando para desativar.
-Executar um script remoto implica confiança no conteúdo atual de `main`; revise o
-script primeiro em ambientes sensíveis. Veja [SECURITY.md](SECURITY.md).
+Requirements: Node.js 22.20 or newer and Git. The `skills` CLI sends anonymous telemetry
+by default; set `DISABLE_TELEMETRY=1` before running the command to opt out.
+Running a remote script trusts the current contents of `main`; review the script
+first in sensitive environments. See [SECURITY.md](SECURITY.md).
 
-## Instalar Node.js
+## Install Node.js
 
-O instalador requer Node.js 22.20 ou mais recente. A versão LTS atual é
-recomendada.
+The installer requires Node.js 22.20 or newer. The current LTS release is
+recommended.
 
-Windows com `winget`:
+Windows with `winget`:
 
 ```powershell
 winget install --id OpenJS.NodeJS.LTS --exact
 ```
 
-Feche e reabra o terminal após a instalação.
+Close and reopen the terminal after installation.
 
-Linux, macOS ou Google Cloud Workstations podem usar `nvm`. Como o `nvm` e o
-Node.js ficam em `$HOME`, a instalação persiste no disco da Cloud Workstation:
+Linux, macOS, and Google Cloud Workstations can use `nvm`. Because `nvm` and
+Node.js are stored under `$HOME`, the installation persists on the Cloud
+Workstation disk:
 
 ```bash
 export NVM_DIR="$HOME/.nvm"
@@ -67,151 +63,135 @@ nvm install --lts
 nvm alias default 'lts/*'
 ```
 
-Valide a instalação:
+Verify the installation:
 
 ```bash
 node --version
 npm --version
 ```
 
-## Escolher Idioma
+## Install From A Clone
 
-Somente um pack deve ser instalado para evitar ativações duplicadas.
-As skills externas `aws-core`, `handoff` e `frontend-design` são publicadas em
-inglês e são as mesmas nos dois packs.
-
-Inglês, a partir de um clone:
+Windows PowerShell:
 
 ```powershell
-.\install.ps1 -Language en
+.\install.ps1
 ```
+
+Linux, macOS, or WSL:
 
 ```bash
-sh install.sh --lang en
+sh install.sh
 ```
 
-Português brasileiro, diretamente do repositório remoto:
+## Catalog
 
-```powershell
-& ([scriptblock]::Create((irm https://raw.githubusercontent.com/JonatanRocha2/vegapunk/main/install.ps1))) -Language pt-br
-```
+| Skill | Primary purpose |
+| --- | --- |
+| `software-architecture` | Architecture decisions, ADRs, trade-offs, and NFRs |
+| `cloud-architecture` | Provider-neutral and multi-cloud architecture |
+| `aws-architecture` | AWS Well-Architected, accounts, IAM, networking, and services |
+| `gcp-architecture` | Google Cloud WAF, projects, IAM, networking, and services |
+| `azure-architecture` | Azure WAF, subscriptions, Entra ID, networking, and services |
+| `terraform-infrastructure` | Secure, modular, and testable Terraform/OpenTofu |
+| `kubernetes-operations` | Kubernetes delivery, operations, and troubleshooting |
+| `devops-cicd` | Reproducible, secure, and promotable pipelines |
+| `sre-incident-response` | SLOs, incidents, runbooks, and postmortems |
+| `cloud-security-review` | Threat modeling and cloud/IaC posture reviews |
+| `finops-cost-review` | Cost and FinOps without degrading SLOs |
+| `network-engineering` | Network design and troubleshooting across DNS, TLS, cloud, and hybrid environments |
+| `ansible-automation` | Idempotent, testable Ansible with safe rollouts |
+| `certification-study` | Ethical, current preparation for official cloud and infrastructure certifications |
+| `code-review` | Risk-, evidence-, and test-driven code review |
+| `semantic-commit` | Conventional Commits grounded in actual diff |
+| `learning-journal` | Decision explanations and persistent memory for technical lessons |
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/JonatanRocha2/vegapunk/main/install.sh | sh -s -- --lang pt-br
-```
+Skills live in `skills/en/`.
 
-## Catálogo
+Caveman remains external and is installed directly from upstream. This avoids
+vendoring, preserves attribution and licensing, and enables controlled updates.
 
-| Inglês | Português brasileiro | Uso principal |
-| --- | --- | --- |
-| `software-architecture` | `software-architecture-pt-br` | Decisões arquiteturais, ADRs, trade-offs e NFRs |
-| `cloud-architecture` | `cloud-architecture-pt-br` | Arquitetura provider-neutral e multicloud |
-| `aws-architecture` | `aws-architecture-pt-br` | AWS Well-Architected, contas, IAM, redes e serviços |
-| `gcp-architecture` | `gcp-architecture-pt-br` | Google Cloud WAF, projetos, IAM, redes e serviços |
-| `azure-architecture` | `azure-architecture-pt-br` | Azure WAF, assinaturas, Entra ID, redes e serviços |
-| `terraform-infrastructure` | `terraform-infrastructure-pt-br` | Terraform/OpenTofu seguro, modular e testável |
-| `kubernetes-operations` | `kubernetes-operations-pt-br` | Kubernetes para deploy, operação e troubleshooting |
-| `devops-cicd` | `devops-cicd-pt-br` | Pipelines reproduzíveis, seguros e promovíveis |
-| `sre-incident-response` | `sre-incident-response-pt-br` | SLOs, incidentes, runbooks e post-mortems |
-| `cloud-security-review` | `cloud-security-review-pt-br` | Threat modeling e revisão de postura cloud/IaC |
-| `finops-cost-review` | `finops-cost-review-pt-br` | Custos e FinOps sem degradar SLOs |
-| `network-engineering` | `network-engineering-pt-br` | Design e troubleshooting de redes, DNS, TLS, cloud e híbrido |
-| `ansible-automation` | `ansible-automation-pt-br` | Ansible idempotente, testável e com rollout seguro |
-| `certification-study` | `certification-study-pt-br` | Estudo ético e atualizado para certificações oficiais de cloud e infraestrutura |
-| `code-review` | `code-review-pt-br` | Revisão baseada em risco, evidências e testes |
-| `semantic-commit` | `semantic-commit-pt-br` | Conventional Commits baseados no diff real |
-| `learning-journal` | `learning-journal-pt-br` | Explicação das decisões e memória persistente de aprendizados técnicos |
+## Recommended External Skills
 
-As versões em inglês ficam em `skills/en/`. As versões brasileiras ficam em
-`skills/pt-br/` e usam o sufixo `-pt-br` para manter nomes globalmente únicos.
+The default installer also copies two narrowly selected English skills at
+immutable upstream commits:
 
-O Caveman permanece externo e é instalado diretamente do upstream. Isso evita
-vendoring, preserva autoria e licença e permite atualizações controladas.
+- [`handoff`](https://github.com/mattpocock/skills) compacts a session into a
+  redacted handoff document for another agent or context window. License: MIT.
+- [`frontend-design`](https://github.com/anthropics/skills) guides distinctive,
+  responsive interface design without adding a runtime tool. License: Apache-2.0.
 
-## Skills externas recomendadas
+Neither skill requests credentials or installs an executable. Use
+`-NoRecommendedSkills` or `--no-recommended-skills` to skip both.
 
-O instalador padrão também copia duas skills em inglês, selecionadas com escopo
-restrito e fixadas em commits imutáveis dos upstreams:
+## Official AWS Toolkit
 
-- [`handoff`](https://github.com/mattpocock/skills) resume uma sessão em um
-  documento de transição com dados sensíveis removidos. Licença: MIT.
-- [`frontend-design`](https://github.com/anthropics/skills) orienta interfaces
-  distintas e responsivas sem adicionar ferramenta de runtime. Licença:
-  Apache-2.0.
+For detailed AWS service implementation, the
+[Agent Toolkit for AWS](https://github.com/aws/agent-toolkit-for-aws) is the
+official AWS-supported catalog. The default installer adds all `aws-core` skills
+at an immutable commit, but does not configure the AWS MCP Server or request
+credentials. Use `-NoAwsToolkit` or `--no-aws-toolkit` to skip them.
 
-Nenhuma delas solicita credenciais ou instala executáveis. Para não instalá-las,
-use `-NoRecommendedSkills` ou `--no-recommended-skills`.
-
-## Toolkit Oficial da AWS
-
-Para implementação detalhada em serviços AWS, o
-[Agent Toolkit for AWS](https://github.com/aws/agent-toolkit-for-aws) é o catálogo
-oficial e suportado pela AWS. O instalador padrão adiciona todas as skills de
-`aws-core`, fixadas em um commit imutável, mas não configura o AWS MCP Server nem
-solicita credenciais. Para não instalá-las, use `-NoAwsToolkit` ou
-`--no-aws-toolkit`.
-
-Para habilitar separadamente o plugin completo, incluindo o MCP, adicione o
-marketplace:
+To enable the complete plugin separately, including its MCP, add the marketplace:
 
 ```bash
 codex plugin marketplace add aws/agent-toolkit-for-aws
 ```
 
-Depois, use `/plugins` no Codex para revisar e instalar `aws-core`. Os plugins
-`aws-agents` e `aws-data-analytics` são opções especializadas. Revise conta,
-região, IAM, telemetria e permissões de escrita antes de habilitar o MCP.
+Then use `/plugins` in Codex to review and install `aws-core`. `aws-agents` and
+`aws-data-analytics` are specialized alternatives. Review the account, Region,
+IAM, telemetry, and write permissions before enabling the MCP.
 
 ## Caveman Proxy
 
-O instalador padrão adiciona somente a skill de resposta concisa. O proxy, que
-comprime entrada e envolve o Codex, é opcional porque usa componentes BSL-1.1,
-encaminha tráfego ao provider e ativa telemetria anônima por padrão.
+The default installer adds only the concise-output skill. The proxy, which
+compresses input and wraps Codex, is optional because it includes BSL-1.1
+components, forwards traffic to the provider, and enables anonymous telemetry
+by default.
 
-Windows, a partir de um clone:
+From a local clone on Windows:
 
 ```powershell
 .\install.ps1 -WithCavemanProxy
 ```
 
-Linux, macOS ou WSL:
+On Linux, macOS, or WSL:
 
 ```bash
 sh install.sh --with-caveman-proxy
 ```
 
-Leia a documentação de segurança e licenciamento do Caveman antes de habilitar
-o proxy. Para desativar sua telemetria: `caveman telemetry off`.
+Read Caveman's security and licensing documentation before enabling the proxy.
+Disable its telemetry with `caveman telemetry off`.
 
-As versões e o commit imutável das dependências externas ficam fixados no início
-dos instaladores. O Renovate acompanha novas versões, espera três dias e abre
-PRs sem automerge para revisão de changelog, licença, diff, digest, telemetria e
-segurança.
+External dependency versions and the immutable commit are pinned at the top of
+both installers. Renovate tracks new versions, waits three days, and opens PRs
+without automerge for review of changelogs, licensing, diffs, digests, telemetry,
+and security.
 
-## Princípios da Curadoria
+## Curation Principles
 
-- Skills pequenas e acionáveis, em vez de um mega-prompt.
-- Fontes oficiais usadas como referência primária.
-- Nenhuma mudança destrutiva de cloud sem plano, diff e aprovação humana.
-- Nenhum segredo em código, logs, state ou respostas.
-- Evidência e verificação antes de declarar sucesso.
-- Arquitetura guiada por requisitos, não por catálogo de serviços.
+- Small, actionable skills instead of a mega-prompt.
+- Official sources as the primary reference.
+- No destructive cloud changes without a plan, diff, and human approval.
+- No secrets in code, logs, state, or responses.
+- Evidence and verification before declaring success.
+- Architecture driven by requirements, not service catalogs.
 
-Veja [CURATION.md](CURATION.md) para fontes e decisões ou
-[CURATION.en.md](CURATION.en.md) para a versão em inglês.
+See [CURATION.md](CURATION.md) for sources and decisions.
 
-## Desenvolvimento
+## Development
 
 ```bash
 npm test
 ```
 
-O validador exige 17 skills por idioma, pares completos entre os packs,
-frontmatter válido e correspondência com este catálogo. A CI usa permissões
-somente de leitura, Actions fixadas por SHA e sem credenciais persistidas; também
-valida os dois instaladores e a descoberta real pelo `skills` CLI.
+The validator requires 17 English skills, valid frontmatter, and consistency
+with the catalog. CI uses read-only permissions, SHA-pinned Actions, and no
+persisted credentials; it also validates both installers and actual discovery
+through the `skills` CLI.
 
-## Licença
+## License
 
-Conteúdo autoral deste repositório: [MIT](LICENSE). Dependências e skills
-externas mantêm suas próprias licenças.
+Original repository content is [MIT licensed](LICENSE). External dependencies
+and skills retain their own licenses.

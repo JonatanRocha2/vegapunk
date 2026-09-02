@@ -1,6 +1,6 @@
 ---
 name: sre-incident-response
-description: Handles production incidents and improves reliability through SLOs, SLIs, error budgets, alerting, runbooks, capacity planning, disaster recovery, and blameless postmortems. Use for outages, latency, errors, saturation, on-call response, reliability reviews, or operacao SRE.
+description: Handles production incidents and improves reliability through SLOs, SLIs, error budgets, alerting, runbooks, capacity planning, disaster recovery, and blameless postmortems. Use for outages, latency, errors, saturation, on-call response, reliability reviews, or SRE operations.
 license: MIT
 metadata:
   author: JonatanRocha2

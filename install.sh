@@ -5,7 +5,6 @@ with_caveman_proxy=0
 install_caveman=1
 install_aws_toolkit=1
 install_recommended_skills=1
-language=en
 allow_elevated=0
 
 # renovate: datasource=npm depName=skills
@@ -32,15 +31,6 @@ while [ "$#" -gt 0 ]; do
     --no-aws-toolkit) install_aws_toolkit=0 ;;
     --no-recommended-skills) install_recommended_skills=0 ;;
     --allow-elevated) allow_elevated=1 ;;
-    --lang)
-      if [ "$#" -lt 2 ]; then
-        printf '%s\n' 'Option --lang requires pt-br or en.' >&2
-        exit 2
-      fi
-      language=$2
-      shift
-      ;;
-    --lang=*) language=${1#--lang=} ;;
     *) printf 'Unknown option: %s\n' "$1" >&2; exit 2 ;;
   esac
   shift
@@ -56,30 +46,12 @@ if [ "$with_caveman_proxy" -eq 1 ] && [ "$install_caveman" -ne 1 ]; then
   exit 2
 fi
 
-case "$language" in
-  en)
-    set -- software-architecture cloud-architecture aws-architecture \
-      gcp-architecture azure-architecture terraform-infrastructure \
-      kubernetes-operations devops-cicd sre-incident-response \
-      cloud-security-review finops-cost-review network-engineering \
-      ansible-automation certification-study code-review semantic-commit \
-      learning-journal
-    ;;
-  pt-br)
-    set -- software-architecture-pt-br cloud-architecture-pt-br \
-      aws-architecture-pt-br gcp-architecture-pt-br azure-architecture-pt-br \
-      terraform-infrastructure-pt-br kubernetes-operations-pt-br \
-      devops-cicd-pt-br sre-incident-response-pt-br \
-      cloud-security-review-pt-br finops-cost-review-pt-br \
-      network-engineering-pt-br ansible-automation-pt-br \
-      certification-study-pt-br code-review-pt-br semantic-commit-pt-br \
-      learning-journal-pt-br
-    ;;
-  *)
-    printf 'Unsupported language: %s (use pt-br or en)\n' "$language" >&2
-    exit 2
-    ;;
-esac
+set -- software-architecture cloud-architecture aws-architecture \
+  gcp-architecture azure-architecture terraform-infrastructure \
+  kubernetes-operations devops-cicd sre-incident-response \
+  cloud-security-review finops-cost-review network-engineering \
+  ansible-automation certification-study code-review semantic-commit \
+  learning-journal
 
 if ! command -v node >/dev/null 2>&1 || \
    ! command -v npx >/dev/null 2>&1 || \
@@ -143,4 +115,4 @@ if [ "$with_caveman_proxy" -eq 1 ]; then
   caveman setup --install
 fi
 
-printf 'Vegapunk %s skills installed for Codex. Restart Codex if needed.\n' "$language"
+printf '%s\n' 'Vegapunk skills installed for Codex. Restart Codex if needed.'

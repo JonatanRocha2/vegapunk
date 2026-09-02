@@ -1,6 +1,6 @@
 ---
 name: software-architecture
-description: Designs or reviews software architecture, ADRs, service boundaries, APIs, data flows, scalability, resilience, migrations, and technical trade-offs. Use for arquitetura de software, system design, modernization, monolith versus microservices, or platform decisions; not for cosmetic code changes.
+description: Designs or reviews software architecture, ADRs, service boundaries, APIs, data flows, scalability, resilience, migrations, and technical trade-offs. Use for software architecture, system design, modernization, monolith versus microservices, or platform decisions; not for cosmetic code changes.
 license: MIT
 metadata:
   author: JonatanRocha2

@@ -1,6 +1,4 @@
 param(
-    [ValidateSet("pt-br", "en")]
-    [string]$Language = "en",
     [switch]$WithCavemanProxy,
     [switch]$NoCaveman,
     [switch]$NoAwsToolkit,
@@ -87,27 +85,14 @@ function Install-PinnedSkill {
     }
 }
 
-$Skills = if ($Language -eq "en") {
-    @(
-        "software-architecture", "cloud-architecture", "aws-architecture",
-        "gcp-architecture", "azure-architecture", "terraform-infrastructure",
-        "kubernetes-operations", "devops-cicd", "sre-incident-response",
-        "cloud-security-review", "finops-cost-review", "network-engineering",
-        "ansible-automation", "certification-study", "code-review",
-        "semantic-commit", "learning-journal"
-    )
-} else {
-    @(
-        "software-architecture-pt-br", "cloud-architecture-pt-br",
-        "aws-architecture-pt-br", "gcp-architecture-pt-br",
-        "azure-architecture-pt-br", "terraform-infrastructure-pt-br",
-        "kubernetes-operations-pt-br", "devops-cicd-pt-br",
-        "sre-incident-response-pt-br", "cloud-security-review-pt-br",
-        "finops-cost-review-pt-br", "network-engineering-pt-br",
-        "ansible-automation-pt-br", "certification-study-pt-br",
-        "code-review-pt-br", "semantic-commit-pt-br", "learning-journal-pt-br"
-    )
-}
+$Skills = @(
+    "software-architecture", "cloud-architecture", "aws-architecture",
+    "gcp-architecture", "azure-architecture", "terraform-infrastructure",
+    "kubernetes-operations", "devops-cicd", "sre-incident-response",
+    "cloud-security-review", "finops-cost-review", "network-engineering",
+    "ansible-automation", "certification-study", "code-review",
+    "semantic-commit", "learning-journal"
+)
 
 $SkillArguments = @("--yes", "skills@$SkillsCliVersion", "add", "JonatanRocha2/vegapunk", "--skill")
 $SkillArguments += $Skills
@@ -166,4 +151,4 @@ if ($WithCavemanProxy) {
     Invoke-Checked -Program "caveman" -Arguments @("setup", "--install")
 }
 
-Write-Output "Vegapunk $Language skills installed for Codex. Restart Codex if needed."
+Write-Output "Vegapunk skills installed for Codex. Restart Codex if needed."

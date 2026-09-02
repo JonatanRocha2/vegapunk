@@ -1,6 +1,6 @@
 ---
 name: code-review
-description: Reviews application-code pull requests, commits, diffs, and local changes for correctness, security, regressions, performance, maintainability, and missing tests. Use for general code review, PR review, revisao de codigo, or pre-merge validation. Prefer the Terraform or cloud-security skill for specialized IaC and posture reviews.
+description: Reviews application-code pull requests, commits, diffs, and local changes for correctness, security, regressions, performance, maintainability, and missing tests. Use for general code review, PR review, or pre-merge validation. Prefer the Terraform or cloud-security skill for specialized IaC and posture reviews.
 license: MIT
 metadata:
   author: JonatanRocha2
