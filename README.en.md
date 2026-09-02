@@ -3,8 +3,8 @@
 **English** | [Português (Brasil)](README.md)
 
 A personal Codex skills collection focused on cloud, DevOps, infrastructure,
-architecture, operations, and code review. Every skill has two complete
-versions: English and Brazilian Portuguese.
+architecture, operations, code review, and continuous learning. Every skill has
+two complete versions: English and Brazilian Portuguese.
 
 The repository follows the open [Agent Skills](https://agentskills.io) standard
 and uses progressive disclosure: the agent loads a skill's detailed instructions
@@ -26,7 +26,7 @@ Linux, macOS, or WSL:
 curl -fsSL https://raw.githubusercontent.com/JonatanRocha2/vegapunk/main/install.sh | sh
 ```
 
-These commands globally install the 16 English skills, the official `aws-core`
+These commands globally install the 17 English skills, the official `aws-core`
 skills, the curated `handoff` and `frontend-design` skills, and the MIT
 [Caveman](https://github.com/JuliusBrussee/caveman) skill for Codex. Rerun the
 installer to update and restart Codex if the skills do not appear.
@@ -123,6 +123,7 @@ Use `-Language pt-br` or `--lang pt-br` for Brazilian Portuguese.
 | `certification-study` | `certification-study-pt-br` | Ethical, current preparation for official cloud and infrastructure certifications |
 | `code-review` | `code-review-pt-br` | Risk-, evidence-, and test-driven code review |
 | `semantic-commit` | `semantic-commit-pt-br` | Conventional Commits grounded in the actual diff |
+| `learning-journal` | `learning-journal-pt-br` | Decision explanations and persistent memory for technical lessons |
 
 English versions live in `skills/en/`. Brazilian versions live in
 `skills/pt-br/` and use the `-pt-br` suffix to preserve globally unique names.
@@ -206,7 +207,7 @@ See [CURATION.en.md](CURATION.en.md) for sources and decisions, or
 npm test
 ```
 
-The validator requires 16 skills per language, complete language pairs, valid
+The validator requires 17 skills per language, complete language pairs, valid
 frontmatter, and consistency with the catalog. CI uses read-only permissions,
 SHA-pinned Actions, and no persisted credentials; it also validates both
 installers and actual discovery through the `skills` CLI.

@@ -94,7 +94,7 @@ $Skills = if ($Language -eq "en") {
         "kubernetes-operations", "devops-cicd", "sre-incident-response",
         "cloud-security-review", "finops-cost-review", "network-engineering",
         "ansible-automation", "certification-study", "code-review",
-        "semantic-commit"
+        "semantic-commit", "learning-journal"
     )
 } else {
     @(
@@ -105,7 +105,7 @@ $Skills = if ($Language -eq "en") {
         "sre-incident-response-pt-br", "cloud-security-review-pt-br",
         "finops-cost-review-pt-br", "network-engineering-pt-br",
         "ansible-automation-pt-br", "certification-study-pt-br",
-        "code-review-pt-br", "semantic-commit-pt-br"
+        "code-review-pt-br", "semantic-commit-pt-br", "learning-journal-pt-br"
     )
 }
 

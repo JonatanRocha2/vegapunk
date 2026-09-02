@@ -62,7 +62,8 @@ case "$language" in
       gcp-architecture azure-architecture terraform-infrastructure \
       kubernetes-operations devops-cicd sre-incident-response \
       cloud-security-review finops-cost-review network-engineering \
-      ansible-automation certification-study code-review semantic-commit
+      ansible-automation certification-study code-review semantic-commit \
+      learning-journal
     ;;
   pt-br)
     set -- software-architecture-pt-br cloud-architecture-pt-br \
@@ -71,7 +72,8 @@ case "$language" in
       devops-cicd-pt-br sre-incident-response-pt-br \
       cloud-security-review-pt-br finops-cost-review-pt-br \
       network-engineering-pt-br ansible-automation-pt-br \
-      certification-study-pt-br code-review-pt-br semantic-commit-pt-br
+      certification-study-pt-br code-review-pt-br semantic-commit-pt-br \
+      learning-journal-pt-br
     ;;
   *)
     printf 'Unsupported language: %s (use pt-br or en)\n' "$language" >&2

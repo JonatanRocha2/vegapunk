@@ -7,7 +7,9 @@ Agent Skills are executable instructions for an agent. Treat changes to
 
 ## Trust Model
 
-- The 16 bilingual skills in this repository are original MIT-licensed content.
+- The 17 bilingual skills in this repository are MIT-licensed;
+  `learning-journal` acknowledges inspiration from the MIT-licensed
+  `apxxrv/session-teacher` skill.
 - The installer runs a version-pinned npm `skills` CLI and copies the Caveman,
   `handoff`, `frontend-design`, and official `aws-core` skills directly from
   upstream at immutable commits.

@@ -3,8 +3,8 @@
 [English](README.en.md) | **Português (Brasil)**
 
 Curadoria pessoal de skills para Codex focada em cloud, DevOps, infraestrutura,
-arquitetura, operações e code review. Cada skill possui duas versões completas:
-inglês e português brasileiro.
+arquitetura, operações, code review e aprendizado contínuo. Cada skill possui
+duas versões completas: inglês e português brasileiro.
 
 O repositório segue o padrão aberto [Agent Skills](https://agentskills.io) e usa
 progressive disclosure: o agente carrega os detalhes de uma skill somente quando
@@ -26,7 +26,7 @@ Linux, macOS ou WSL:
 curl -fsSL https://raw.githubusercontent.com/JonatanRocha2/vegapunk/main/install.sh | sh
 ```
 
-Os comandos instalam globalmente as 16 skills em inglês, as skills oficiais do
+Os comandos instalam globalmente as 17 skills em inglês, as skills oficiais do
 `aws-core`, as skills selecionadas `handoff` e `frontend-design` e a skill MIT do
 [Caveman](https://github.com/JuliusBrussee/caveman) para o Codex. Reexecute o
 instalador para atualizar e reinicie o Codex se as skills não aparecerem.
@@ -120,6 +120,7 @@ curl -fsSL https://raw.githubusercontent.com/JonatanRocha2/vegapunk/main/install
 | `certification-study` | `certification-study-pt-br` | Estudo ético e atualizado para certificações oficiais de cloud e infraestrutura |
 | `code-review` | `code-review-pt-br` | Revisão baseada em risco, evidências e testes |
 | `semantic-commit` | `semantic-commit-pt-br` | Conventional Commits baseados no diff real |
+| `learning-journal` | `learning-journal-pt-br` | Explicação das decisões e memória persistente de aprendizados técnicos |
 
 As versões em inglês ficam em `skills/en/`. As versões brasileiras ficam em
 `skills/pt-br/` e usam o sufixo `-pt-br` para manter nomes globalmente únicos.
@@ -205,7 +206,7 @@ Veja [CURATION.md](CURATION.md) para fontes e decisões ou
 npm test
 ```
 
-O validador exige 16 skills por idioma, pares completos entre os packs,
+O validador exige 17 skills por idioma, pares completos entre os packs,
 frontmatter válido e correspondência com este catálogo. A CI usa permissões
 somente de leitura, Actions fixadas por SHA e sem credenciais persistidas; também
 valida os dois instaladores e a descoberta real pelo `skills` CLI.

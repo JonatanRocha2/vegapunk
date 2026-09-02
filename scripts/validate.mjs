@@ -61,8 +61,8 @@ for (const language of languages) {
     }
   }
 
-  if (languageNames.size !== 16) {
-    console.error(`FAIL ${language}: expected 16 skills, found ${languageNames.size}`);
+  if (languageNames.size !== 17) {
+    console.error(`FAIL ${language}: expected 17 skills, found ${languageNames.size}`);
     failures += 1;
   }
 }

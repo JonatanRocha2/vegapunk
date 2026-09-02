@@ -7,7 +7,8 @@ Agent Skills são instruções executáveis pelo agente. Trate alterações em
 
 ## Modelo de confiança
 
-- As 16 skills bilíngues deste repositório são conteúdo autoral sob MIT.
+- As 17 skills bilíngues deste repositório são conteúdo MIT; `learning-journal`
+  reconhece a inspiração na skill MIT `apxxrv/session-teacher`.
 - O instalador executa o `skills` CLI do npm com versão fixa e copia as skills
   Caveman, `handoff`, `frontend-design` e as skills oficiais do `aws-core`
   diretamente dos upstreams em commits imutáveis.
