@@ -1,4 +1,5 @@
 param(
+    [switch]$RepoOnly,
     [switch]$WithCavemanProxy,
     [switch]$NoCaveman,
     [switch]$NoAwsToolkit,
@@ -36,6 +37,9 @@ if ($IsAdministrator -and -not $AllowElevated) {
 
 if ($WithCavemanProxy -and $NoCaveman) {
     throw "-WithCavemanProxy cannot be combined with -NoCaveman."
+}
+if ($RepoOnly -and $WithCavemanProxy) {
+    throw "-RepoOnly cannot be combined with -WithCavemanProxy."
 }
 
 if (-not (Get-Command node -ErrorAction SilentlyContinue) -or
@@ -99,7 +103,7 @@ $SkillArguments += $Skills
 $SkillArguments += @("-a", "codex", "-g", "--yes")
 Invoke-Checked -Program "npx" -Arguments $SkillArguments
 
-if (-not $NoAwsToolkit) {
+if (-not $RepoOnly -and -not $NoAwsToolkit) {
     $AwsToolkitTemp = Join-Path ([IO.Path]::GetTempPath()) "vegapunk-aws-$([guid]::NewGuid())"
     try {
         Invoke-Checked -Program "git" -Arguments @("init", "--quiet", $AwsToolkitTemp)
@@ -128,7 +132,7 @@ if (-not $NoAwsToolkit) {
     }
 }
 
-if (-not $NoRecommendedSkills) {
+if (-not $RepoOnly -and -not $NoRecommendedSkills) {
     Install-PinnedSkill `
         -Repository "https://github.com/mattpocock/skills.git" `
         -Commit $HandoffCommit `
@@ -139,7 +143,7 @@ if (-not $NoRecommendedSkills) {
         -Skill "frontend-design"
 }
 
-if (-not $NoCaveman) {
+if (-not $RepoOnly -and -not $NoCaveman) {
     Install-PinnedSkill `
         -Repository "https://github.com/JuliusBrussee/caveman.git" `
         -Commit $CavemanCommit `
@@ -151,4 +155,8 @@ if ($WithCavemanProxy) {
     Invoke-Checked -Program "caveman" -Arguments @("setup", "--install")
 }
 
-Write-Output "Vegapunk skills installed for Codex. Restart Codex if needed."
+if ($RepoOnly) {
+    Write-Output "Vegapunk repository skills updated for Codex. Restart Codex if needed."
+} else {
+    Write-Output "Vegapunk skills installed for Codex. Restart Codex if needed."
+}

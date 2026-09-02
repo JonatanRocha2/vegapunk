@@ -2,6 +2,7 @@
 set -eu
 
 with_caveman_proxy=0
+repo_only=0
 install_caveman=1
 install_aws_toolkit=1
 install_recommended_skills=1
@@ -26,6 +27,7 @@ frontend_design_commit=3b3fad96af16a10759d930941b4520ba0c40edae
 
 while [ "$#" -gt 0 ]; do
   case "$1" in
+    --repo-only) repo_only=1 ;;
     --with-caveman-proxy) with_caveman_proxy=1 ;;
     --no-caveman) install_caveman=0 ;;
     --no-aws-toolkit) install_aws_toolkit=0 ;;
@@ -43,6 +45,11 @@ fi
 
 if [ "$with_caveman_proxy" -eq 1 ] && [ "$install_caveman" -ne 1 ]; then
   printf '%s\n' '--with-caveman-proxy cannot be combined with --no-caveman.' >&2
+  exit 2
+fi
+
+if [ "$repo_only" -eq 1 ] && [ "$with_caveman_proxy" -eq 1 ]; then
+  printf '%s\n' '--repo-only cannot be combined with --with-caveman-proxy.' >&2
   exit 2
 fi
 
@@ -82,7 +89,7 @@ install_pinned_skill() {
 
 npx --yes "skills@$skills_cli_version" add JonatanRocha2/vegapunk --skill "$@" -a codex -g --yes
 
-if [ "$install_aws_toolkit" -eq 1 ]; then
+if [ "$repo_only" -ne 1 ] && [ "$install_aws_toolkit" -eq 1 ]; then
   aws_toolkit_temp=$(mktemp -d)
   trap 'rm -rf "$aws_toolkit_temp"' EXIT HUP INT TERM
   git init --quiet "$aws_toolkit_temp"
@@ -98,14 +105,14 @@ if [ "$install_aws_toolkit" -eq 1 ]; then
   trap - EXIT HUP INT TERM
 fi
 
-if [ "$install_recommended_skills" -eq 1 ]; then
+if [ "$repo_only" -ne 1 ] && [ "$install_recommended_skills" -eq 1 ]; then
   install_pinned_skill \
     https://github.com/mattpocock/skills.git "$handoff_commit" handoff
   install_pinned_skill \
     https://github.com/anthropics/skills.git "$frontend_design_commit" frontend-design
 fi
 
-if [ "$install_caveman" -eq 1 ]; then
+if [ "$repo_only" -ne 1 ] && [ "$install_caveman" -eq 1 ]; then
   install_pinned_skill \
     https://github.com/JuliusBrussee/caveman.git "$caveman_commit" caveman
 fi
@@ -115,4 +122,8 @@ if [ "$with_caveman_proxy" -eq 1 ]; then
   caveman setup --install
 fi
 
-printf '%s\n' 'Vegapunk skills installed for Codex. Restart Codex if needed.'
+if [ "$repo_only" -eq 1 ]; then
+  printf '%s\n' 'Vegapunk repository skills updated for Codex. Restart Codex if needed.'
+else
+  printf '%s\n' 'Vegapunk skills installed for Codex. Restart Codex if needed.'
+fi

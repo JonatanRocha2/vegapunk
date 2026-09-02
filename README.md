@@ -31,6 +31,27 @@ by default; set `DISABLE_TELEMETRY=1` before running the command to opt out.
 Running a remote script trusts the current contents of `main`; review the script
 first in sensitive environments. See [SECURITY.md](SECURITY.md).
 
+## Update Repository Skills Only
+
+Use these commands to refresh only the 17 skills published by Vegapunk. They
+read the current remote repository and do not reinstall `aws-core`, `handoff`,
+`frontend-design`, or Caveman.
+
+Windows PowerShell:
+
+```powershell
+& ([scriptblock]::Create((irm https://raw.githubusercontent.com/JonatanRocha2/vegapunk/main/install.ps1))) -RepoOnly
+```
+
+Linux, macOS, or WSL:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/JonatanRocha2/vegapunk/main/install.sh | sh -s -- --repo-only
+```
+
+These commands update globally installed copies. They do not modify a local
+Vegapunk clone.
+
 ## Install Node.js
 
 The installer requires Node.js 22.20 or newer. The current LTS release is

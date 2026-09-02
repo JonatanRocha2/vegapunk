@@ -17,3 +17,21 @@ and Skills CLI discovers exactly 17 skills.
 
 **Reusable lesson:** Locale variants create ongoing synchronization cost. Add one
 only when demand and ownership justify maintaining complete parity.
+
+## 2026-09-02 - Remote repository-only updates
+
+**Context:** Existing users need to refresh Vegapunk skills without updating a
+local clone or reinstalling external catalogs and recommended skills.
+
+**Solution:** Add `-RepoOnly` to `install.ps1` and `--repo-only` to `install.sh`.
+Both modes install current Vegapunk skills directly from GitHub while skipping
+`aws-core`, `handoff`, `frontend-design`, Caveman, and Caveman proxy setup.
+
+**Decision:** Reuse existing pinned installer and skill list instead of adding
+separate update scripts that could drift from installation behavior.
+
+**Verification:** Validate catalog structure, PowerShell syntax, Skills CLI
+discovery, and shell syntax in CI.
+
+**Reusable lesson:** Prefer one installer with a narrow mode flag when install
+and update share source selection and destination semantics.
