@@ -67,7 +67,7 @@ if ! command -v node >/dev/null 2>&1 || \
   exit 1
 fi
 
-if ! node -e 'const [a,b]=process.versions.node.split(".").map(Number); process.exit(a>22 || (a===22 && b>=20) ? 0 : 1)'; then
+if ! node -e 'const [a,b]=process.versions.node.split(".").map(Number); process.exit(a>22 || (a===22 && b>=20) ? 0 : 1)' </dev/null; then
   printf 'Node.js 22.20 or newer is required; found %s\n' "$(node --version)" >&2
   exit 1
 fi
@@ -78,29 +78,30 @@ install_pinned_skill() {
   skill=$3
   pinned_skill_temp=$(mktemp -d)
   trap 'rm -rf "$pinned_skill_temp"' EXIT HUP INT TERM
-  git init --quiet "$pinned_skill_temp"
-  git -C "$pinned_skill_temp" fetch --quiet --depth 1 "$repository" "$commit"
-  git -C "$pinned_skill_temp" checkout --quiet --detach FETCH_HEAD
+  git init --quiet "$pinned_skill_temp" </dev/null
+  git -C "$pinned_skill_temp" fetch --quiet --depth 1 "$repository" "$commit" </dev/null
+  git -C "$pinned_skill_temp" checkout --quiet --detach FETCH_HEAD </dev/null
   npx --yes "skills@$skills_cli_version" add "$pinned_skill_temp" \
-    --skill "$skill" -a codex -g --copy --yes
+    --skill "$skill" -a codex -g --copy --yes </dev/null
   rm -rf "$pinned_skill_temp"
   trap - EXIT HUP INT TERM
 }
 
-npx --yes "skills@$skills_cli_version" add JonatanRocha2/vegapunk --skill "$@" -a codex -g --yes
+npx --yes "skills@$skills_cli_version" add JonatanRocha2/vegapunk \
+  --skill "$@" -a codex -g --yes </dev/null
 
 if [ "$repo_only" -ne 1 ] && [ "$install_aws_toolkit" -eq 1 ]; then
   aws_toolkit_temp=$(mktemp -d)
   trap 'rm -rf "$aws_toolkit_temp"' EXIT HUP INT TERM
-  git init --quiet "$aws_toolkit_temp"
+  git init --quiet "$aws_toolkit_temp" </dev/null
   git -C "$aws_toolkit_temp" fetch --quiet --depth 1 \
-    https://github.com/aws/agent-toolkit-for-aws.git "$aws_toolkit_commit"
-  git -C "$aws_toolkit_temp" sparse-checkout init --cone
-  git -C "$aws_toolkit_temp" sparse-checkout set skills/core-skills
-  git -C "$aws_toolkit_temp" checkout --quiet --detach FETCH_HEAD
+    https://github.com/aws/agent-toolkit-for-aws.git "$aws_toolkit_commit" </dev/null
+  git -C "$aws_toolkit_temp" sparse-checkout init --cone </dev/null
+  git -C "$aws_toolkit_temp" sparse-checkout set skills/core-skills </dev/null
+  git -C "$aws_toolkit_temp" checkout --quiet --detach FETCH_HEAD </dev/null
   npx --yes "skills@$skills_cli_version" add \
     "$aws_toolkit_temp/skills/core-skills" \
-    --skill '*' -a codex -g --copy --yes
+    --skill '*' -a codex -g --copy --yes </dev/null
   rm -rf "$aws_toolkit_temp"
   trap - EXIT HUP INT TERM
 fi
@@ -118,8 +119,8 @@ if [ "$repo_only" -ne 1 ] && [ "$install_caveman" -eq 1 ]; then
 fi
 
 if [ "$with_caveman_proxy" -eq 1 ]; then
-  npm install -g "@caveman-ai/cli@$caveman_cli_version"
-  caveman setup --install
+  npm install -g "@caveman-ai/cli@$caveman_cli_version" </dev/null
+  caveman setup --install </dev/null
 fi
 
 if [ "$repo_only" -eq 1 ]; then

@@ -51,6 +51,9 @@ jobs:
       - name: Validate shell installer syntax
         run: sh -n install.sh
 
+      - name: Verify piped shell installer completion
+        run: sh scripts/test-install-pipe.sh
+
       - name: Validate PowerShell installer syntax
         shell: pwsh
         run: |

@@ -31,7 +31,28 @@ Both modes install current Vegapunk skills directly from GitHub while skipping
 separate update scripts that could drift from installation behavior.
 
 **Verification:** Validate catalog structure, PowerShell syntax, Skills CLI
-discovery, and shell syntax in CI.
+discovery, shell syntax, and piped installer completion in CI.
 
 **Reusable lesson:** Prefer one installer with a narrow mode flag when install
 and update share source selection and destination semantics.
+
+## 2026-09-02 - Protect piped installer input
+
+**Context:** `curl | sh` supplies script text through standard input. Skills CLI
+also reads standard input and consumed the unparsed remainder after its first
+invocation, so later installation stages silently never ran.
+
+**Solution:** Redirect standard input from `/dev/null` for Node.js, Git, `npx`,
+`npm`, and Caveman child processes in `install.sh`. Add CI tests whose mock child
+commands consume all available input and assert that full and repository-only
+installer modes reach their final messages.
+
+**Decision:** Isolate each child process rather than downloading and re-executing
+the installer from a temporary file. This keeps documented one-line commands
+while removing shared-standard-input coupling.
+
+**Verification:** Reproduce failure with exact remote command, rerun with a
+temporary Linux Node.js runtime, and exercise pipe completion with consuming mock.
+
+**Reusable lesson:** Scripts designed for `curl | sh` must never let child
+processes inherit script standard input.
